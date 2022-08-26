@@ -1,0 +1,15 @@
+{
+  "id_alumno": 0,
+  "apoderado": {
+    "id_apoderado": 1
+  },
+  "rut_alumno": "22.333.555-4",
+  "nombres_alumno": "María Fernanda",
+  "apellido_paterno_alumno": "Vásquez",
+  "apellido_materno_alumno": "Vásquez",
+  "fecha_nacimiento_alumno": "2010-08-18T21:38:07.231Z",
+  "genero_alumno": "Femenino",
+  "edad_alumno": 12,
+  "createdAt": "2022-08-18T21:38:07.231Z",
+  "updatedAt": "2022-08-18T21:38:07.231Z"
+}
