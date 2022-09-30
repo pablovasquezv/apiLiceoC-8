@@ -19,14 +19,14 @@ import java.util.List;
 @Repository
 public interface IAlumnoRepository extends JpaRepository<Alumno, Long> {
     // Seleccionar todas la instancias desde la BD y haciendo un Join con la tabla Apoderado
-    @Query(value = "select a from Alumno a left join fetch a.apoderado")
+    @Query(value = "select a from Alumno a left join fetch a.apoderado e left join a.domicilio")
     public List<Alumno> findAll(Sort sort);
 
     // Contar la cantidad de Alumnos que vienen en la búsqueda y páginarlos
-    @Query(value = "select a from Alumno a left join fetch a.apoderado",
-            countQuery = "select (a) from Alumno a left join a.apoderado ")
+    @Query(value = "select a from Alumno a left join fetch a.apoderado e left join a.domicilio",
+            countQuery = "select (a) from Alumno a left join a.apoderado e left join a.domicilio")
     public Page<Alumno> findAll(Pageable pageable);
 
-    @Query(value = "select a from Alumno a left join a.apoderado where a.id=:id")
+    @Query(value = "select a from Alumno a left join a.apoderado e left join a.domicilio where a.id=:id")
     public Alumno findById(long id);
 }

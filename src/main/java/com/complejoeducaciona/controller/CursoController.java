@@ -5,6 +5,7 @@ package com.complejoeducaciona.controller;
 
 import java.util.List;
 
+import com.complejoeducaciona.impl.ICursoImpleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.complejoeducaciona.models.Curso;
 import com.complejoeducaciona.services.CursoService;
 
+import javax.validation.Valid;
+
 /**
  * @author Pablo
  *
@@ -34,28 +37,30 @@ public class CursoController {
 	 * creacion de una instancia de esta.
 	 **/
 	@Autowired
-	private CursoService cursoService;
+	private ICursoImpleService iCursoImpleService;
+	//private CursoService cursoService;
 	
 	// Método para crear un Curso
 	@ResponseBody
 	@PostMapping("/create")
-	public Curso addNewCurso(@RequestBody Curso curso) {
+	public Curso addNewCurso(@Valid @RequestBody Curso curso) {
 		// TODO Auto-generated method stub
-		return cursoService.create(curso);
+		//return cursoService.create(curso);
+		return iCursoImpleService.save(curso);
 	}
 	
 	// Método para actualizar un Curso
 	@PutMapping("/update")
 	public void  updateCurso(@RequestBody Curso curso) {
-		 cursoService.update(curso);
+		 //cursoService.update(curso);
 	}
 	
 	// Listar Todos los Cursos
-	@DeleteMapping("/delete/{id}")
+	/**@DeleteMapping("/delete/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	private ResponseEntity<List<Curso>> listAllCursos(){
 		return ResponseEntity.ok(cursoService.getAllCursos());
-	}
+	}*/
 	
 	
 }

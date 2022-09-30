@@ -9,15 +9,15 @@ import java.util.List;
 
 public interface IAlumnoImplementServices {
 
-    public Alumno save(Alumno alumno);
+    public Alumno save(Alumno alumno) throws Exception;
 
-    public Alumno update(Alumno alumno);
+    public Alumno update(Alumno alumno) throws Exception;
 
-    public List<Alumno> findAll(Sort sort);
+    public List<Alumno> findAll(Sort sort) throws Exception;
 
-    public Page<Alumno> findAll(Pageable pageable);
+    public Page<Alumno> findAll(Pageable pageable) throws Exception;
 
-    public Alumno findById(long id);
+    public Alumno findById(long id) throws Exception;
 
-    public void deleteById(long id);
+    public void deleteById(long id) throws Exception;
 }

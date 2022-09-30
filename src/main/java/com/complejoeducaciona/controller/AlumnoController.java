@@ -11,7 +11,6 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import com.complejoeducaciona.impl.IAlumnoImplementServices;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,16 +19,31 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import com.complejoeducaciona.models.Alumno;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Pablo
  */
+@Slf4j
 @RestController
 @RequestMapping(value = ("/colegio/alumnos"))
 public class AlumnoController {
+
     @Autowired
     private IAlumnoImplementServices iAlumnoImplementServices;
 
@@ -63,6 +77,8 @@ public class AlumnoController {
         } catch (DataAccessException e) {
             responseAsMap.put("Mensaje", "No se creo el Alumno" + e.getMostSpecificCause().toString());
             reponseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            log.error("Ocurrio un Error =>" + e);
         }
 
         return reponseEntity;
@@ -73,7 +89,12 @@ public class AlumnoController {
     @PutMapping("/update/{id}")
     @ResponseBody()
     private void updateAumno(@PathVariable long id, @Valid @RequestBody Alumno alumno) {
-        iAlumnoImplementServices.update(alumno);
+        try {
+            iAlumnoImplementServices.update(alumno);
+        } catch (Exception e) {
+            log.error("Ocurrio un Error =>" + e);
+        }
+
     }
 
     @GetMapping("/get/all")
@@ -84,21 +105,73 @@ public class AlumnoController {
         Sort sortByName = Sort.by("nombres_alumno");
         ResponseEntity<List<Alumno>> responseEntity = null;
         List<Alumno> alumnos = null;
-        if (page != null & size != null) {
-            Pageable pageable = PageRequest.of(page, size, sortByName);
-            alumnos = iAlumnoImplementServices.findAll(pageable).getContent();
-        } else {
-            alumnos = iAlumnoImplementServices.findAll(sortByName);
+        try {
+            if (page != null & size != null) {
+                Pageable pageable = PageRequest.of(page, size, sortByName);
+                alumnos = iAlumnoImplementServices.findAll(pageable).getContent();
+            } else {
+                alumnos = iAlumnoImplementServices.findAll(sortByName);
+            }
+
+            // Validación sí tiene Alumnos la lista
+            if (alumnos.size() > 0) {
+                responseEntity = new ResponseEntity<List<Alumno>>(alumnos, HttpStatus.OK);
+            } else {
+                responseEntity = new ResponseEntity<List<Alumno>>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            log.error("Ocurrio un error =>");
         }
 
-        // Validación sí tiene Alumnos la lista
-        if (alumnos.size() > 0) {
-            responseEntity = new ResponseEntity<List<Alumno>>(alumnos, HttpStatus.OK);
-        } else {
-            responseEntity = new ResponseEntity<List<Alumno>>(HttpStatus.NO_CONTENT);
-        }
         return responseEntity;
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Alumno> findById(@PathVariable int id) {
+        // TODO Auto-generated method stub
+        Alumno alumnos = null;
+        ResponseEntity<Alumno> responseEntity = null;
+        try {
+            alumnos = iAlumnoImplementServices.findById(id);
+            // si exite
+            if (alumnos != null) {
+                // retorna un 200
+                responseEntity = new ResponseEntity<Alumno>(alumnos, HttpStatus.OK);
+            } else {
+                // retorna un 202
+                responseEntity = new ResponseEntity<Alumno>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            log.error("Ocurrio un error =>" + e);
+        }
+
+        return responseEntity;
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    private ResponseEntity<Alumno> deleteById(@PathVariable int id) {
+        // TODO Auto-generated method stub
+
+        Alumno alumnos = null;
+        ResponseEntity<Alumno> responseEntity = null;
+        try {
+
+            alumnos = iAlumnoImplementServices.findById(id);
+            // si exite
+            if (alumnos != null) {
+                // retorna un 200
+                iAlumnoImplementServices.deleteById(id);
+                responseEntity = new ResponseEntity<Alumno>(HttpStatus.OK);
+            } else {
+                // retorna un 202
+                responseEntity = new ResponseEntity<Alumno>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            log.error("Ocurrio un Error =>" + e);
+        }
+
+        return responseEntity;
+    }
 }
 

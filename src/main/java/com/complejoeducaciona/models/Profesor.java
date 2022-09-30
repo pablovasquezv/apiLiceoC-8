@@ -1,9 +1,11 @@
 package com.complejoeducaciona.models;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,12 +13,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -29,7 +33,6 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author Pablo
- *
  */
 
 @Data
@@ -57,8 +60,6 @@ public class Profesor {
     @Column(name = "id_profesor")
     private Long id_profesor;
 
-    @OneToMany(mappedBy = "profesor", fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
-    private List<Curso> cursos;
     @NotEmpty(message = "¡El Rut no debe estar vacío!")
     @Size(min = 9, max = 12, message = "¡El campo Rut debe ser ingresado mínimo 9 y máximo 10 dígitos!")
     @Column(name = "rut_profesor")
@@ -66,33 +67,52 @@ public class Profesor {
 
     @NotEmpty(message = "¡El campo del Nombre no debe ser vacío!")
     @Size(min = 4, max = 30, message = "¡El campo nombre debe tener enter 4 y 30 carácteres!")
-    @Column(name = "nombre_profesor")
-    private String nombre_profesor;
+    @Column(name = "nombres_profesor")
+    private String nombres_profesor;
 
-    @NotEmpty(message = "¡El campo del Apellido no debe ser vacío!")
-    @Size(min = 4, max = 60, message = "El campo Apellido Paterno debe tener enter 4 y 20 carácteres!")
-    @Column(name = "apellido_profesor")
-    private String apellido_profesor;
+    @NotEmpty(message = "¡El campo del Apellido Paterno no debe ser vacío!")
+    @Size(min = 4, max = 20, message = "El Apellido Paterno debe tener enter 4 y 20 carácteres!")
+    @Column(name = "apellido_paterno_profesor")
+    private String apellido_paterno_profesor;
+
+    @NotEmpty(message = "¡El campo del Apellido Paterno no debe ser vacío!")
+    @Size(min = 4, max = 20, message = "¡El Apellido Materno debe tener enter 4 y 20 carácteres!")
+    @Column(name = "apellido_materno_profesor")
+    private String apellido_materno_profesor;
+
+    @Column(name = "fecha_nacimiento_profesor")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fecha_nacimiento_profesor;
+
+    @NotEmpty(message = "¡El campo Género no puede ser vacío!")
+    @Size(min = 2, max = 20, message = "El campo Genero debe tener enter 4 y 20 carácteres!")
+    @Column(name = "genero_profesor")
+    private String genero_profesor;
 
     @NotEmpty(message = "¡El campo del celular no debes ser vacío!")
     @Size(min = 2, max = 12, message = "¡El campo Población debe tener enter 4 y 120 carácteres!")
     @Column(name = "celular_profesor")
     private String celular_profesor;
 
-    @NotEmpty(message = "¡La calle no debe ser vacía!")
-    @Size(min = 4, max = 120, message = "¡El campo Población o Condominío debe tener enter 4 y 120 carácteres!")
-    @Column(name = "poblacion_profesor")
-    private String poblacion_profesor;
+    @NotEmpty(message = "¡El email_profesor no debe ser vacía!")
+    @Size(min = 4, max = 120, message = "¡El campo email_apoderadoo Condominío debe tener enter 4 y 120 carácteres!")
+    @Column(name = "email_profesor")
+    private String email_profesor;
 
-    @NotEmpty(message = "¡La calle no debe ser vacía!")
-    @Size(min = 4, max = 120, message = "¡El Apellido Paterno debe tener enter 4 y 120 carácteres!")
-    @Column(name = "calle_profesor")
-    private String calle_profesor;
+    /**
+     * CascadeType.ALL: de está forma permite la persistencia,actualización eliminación a través
+     * de la misma persona
+     */
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @NotNull(message = "¡El id del domicilio no debe ser nulo!")
+    @JoinColumn(name = "id_domicilio")
+    private Domicilio domicilio;
 
-    @NotEmpty(message = "¡El campo número de la calle no debe ser vacío!")
-    @Size(min = 3, max = 6, message = "¡El número mínimo es 3 dígitos para la dirección!")
-    @Column(name = "numero_casa_profesor")
-    private String numero_casa_profesor;
+    /**
+     * @JsonIgnore
+     * @OneToMany(mappedBy = "profesor", fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
+     * private List<Curso> cursos;
+     */
 
     // Esto no permitirá que el campo createdAt sea modificado después de su
     // creación.

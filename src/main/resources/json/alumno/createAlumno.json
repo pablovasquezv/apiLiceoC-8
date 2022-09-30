@@ -3,13 +3,22 @@
   "apoderado": {
     "id_apoderado": 1
   },
-  "rut_alumno": "22.333.555-4",
-  "nombres_alumno": "María Fernanda",
+  "rut_alumno": "21.456.534-6",
+  "nombres_alumno": "Joel Ignacio",
   "apellido_paterno_alumno": "Vásquez",
-  "apellido_materno_alumno": "Vásquez",
-  "fecha_nacimiento_alumno": "2010-08-18T21:38:07.231Z",
-  "genero_alumno": "Femenino",
+  "apellido_materno_alumno": "Veloso",
+  "fecha_nacimiento_alumno": "2012-08-30T01:55:39.281Z",
+  "genero_alumno": "Masculino",
   "edad_alumno": 12,
-  "createdAt": "2022-08-18T21:38:07.231Z",
-  "updatedAt": "2022-08-18T21:38:07.231Z"
+  "domicilio": {
+    "id_domicilio": 0,
+    "numero_domicilio": 1324,
+    "nombre_calle_domicilio": "El Aromo",
+    "sector_domicilio": "Renacer",
+    "ciudad_domicilio": "Traiguen",
+    "createdAt": "2022-08-30T01:55:39.281Z",
+    "updatedAt": "2022-08-30T01:55:39.281Z"
+  },
+  "createdAt": "2022-08-30T01:55:39.281Z",
+  "updatedAt": "2022-08-30T01:55:39.281Z"
 }

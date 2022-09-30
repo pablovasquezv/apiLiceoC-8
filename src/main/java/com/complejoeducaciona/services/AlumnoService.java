@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Pablo
- *
  */
 @Service
 public class AlumnoService implements IAlumnoImplementServices {
@@ -38,19 +37,21 @@ public class AlumnoService implements IAlumnoImplementServices {
     @Override
     @Transactional(readOnly = false)
     public Alumno save(Alumno alumno) {
-        Apoderado apoderado = apoderadoRepository.findById
+        /**Apoderado apoderado = apoderadoRepository.findById
                 (alumno.getApoderado().getId_apoderado()).orElse(null);
-        alumno.setApoderado(apoderado);
+        alumno.setApoderado(apoderado);*/
         return iAlumnoRepository.save(alumno);
+
     }
 
     @Override
     @Transactional(readOnly = false)
     public Alumno update(Alumno alumno) {
-        Apoderado apoderado = apoderadoRepository.findById
-                (alumno.getApoderado().getId_apoderado()).orElse(null);
-        alumno.setApoderado(apoderado);
-        return iAlumnoRepository.save(alumno);
+        /** Apoderado apoderado = apoderadoRepository.findById
+         (alumno.getApoderado().getId_apoderado()).orElse(null);
+         alumno.setApoderado(apoderado);
+         return iAlumnoRepository.save(alumno);*/
+        return null;
     }
 
     @Override

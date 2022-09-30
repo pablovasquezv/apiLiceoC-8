@@ -1,0 +1,17 @@
+{
+  "rut_apoderado": "16.412.041-4",
+  "nombres_apoderado": "Juan Pablo",
+  "apellidos_apoderado": "Vásquez",
+  "celular_apoderado": "+56952347423",
+  "email_apoderado": "pablo1986vasquez@gmail.com",
+  "edad_apoderado": 36,
+  "edad_apoderado": 120,
+  "domicilio": {
+    "numero_domicilio": 714,
+    "nombre_calle_domicilio": "El Olivillo",
+    "sector_domicilio": "Guacolda Sur N 2",
+    "ciudad_domicilio":"TRAIGUEN",
+    "createdAt": "2022-08-28T02:53:28.266Z"
+  },
+  "createdAt": "2022-08-28T02:53:28.266Z"
+}

@@ -6,18 +6,20 @@ package com.complejoeducaciona.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.complejoeducaciona.impl.ICursoImpleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.complejoeducaciona.models.Curso;
 import com.complejoeducaciona.repository.ICursoRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Pablo
  *
  */
 @Service
-public class CursoService {
+public class CursoService implements ICursoImpleService {
 	/*
 	 * Autowired:es Para decirle al servicio que estÃ¡ conectado con el repositorio
 	 * que esta haciendo uso de la base de datos y de los objetos. Además, crea la
@@ -28,7 +30,12 @@ public class CursoService {
 	private ICursoRepository iCursoRepository;
 
 	// Método para Crear un Curso
-	public Curso create(Curso curso) {
+	/**public Curso create(Curso curso) {
+		return iCursoRepository.save(curso);
+	}*/
+	@Override
+	@Transactional(readOnly = false)
+	public Curso save(Curso curso) {
 		return iCursoRepository.save(curso);
 	}
 
@@ -51,4 +58,6 @@ public class CursoService {
 	public Optional<Curso> findById(Long id_curso) {
 		return iCursoRepository.findById(id_curso);
 	}
+
+
 }
