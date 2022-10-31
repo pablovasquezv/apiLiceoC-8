@@ -120,9 +120,8 @@ public class AlumnoController {
                 responseEntity = new ResponseEntity<List<Alumno>>(HttpStatus.NO_CONTENT);
             }
         } catch (Exception e) {
-            log.error("Ocurrio un error =>");
+            log.error("Ocurrio un error =>"+e);
         }
-
         return responseEntity;
     }
 
