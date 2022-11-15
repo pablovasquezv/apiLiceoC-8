@@ -111,5 +111,4 @@ public class XmlToJson {
         xml = xml.replace("</pIngresaroperacion>", "</Ingope>");
         return xml;
     }
-
 }
