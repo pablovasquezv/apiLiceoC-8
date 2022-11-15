@@ -28,7 +28,7 @@ public interface IApoderadoRepository extends JpaRepository<Apoderado, Long> {
 
     // Contar la cantidad de Apoderados que vienen en la búsqueda y páginarlos
     @Query(value = "select a from Apoderado a left join fetch a.domicilio",
-            countQuery = "select (a) from Apoderado a left join a.domicilio")
+            countQuery = "select count(a) from Apoderado a left join a.domicilio")
     public Page<Apoderado> findAll(Pageable pageable);
 
     @Query(value = "select a from Apoderado a left join a.domicilio where a.id=:id")
