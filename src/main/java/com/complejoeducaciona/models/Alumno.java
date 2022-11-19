@@ -49,24 +49,27 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "alumnos")
 public class Alumno implements Serializable {
-	/***
+	/**
+	 * Serializable:para hacer la persistencia del objeto y convertilo en una
+	 * secuencia de Bytes para poder almacenarlo en algún medio de almacenamiento en
+	 * esta caso una BD.
+	 *
 	 * @GeneratedValue genera automaticamente el id.
-	 * @Column Personalización para las columnas.
-	 * unique = true(no se repita el valor ingresado)
+	 * @Column Personalización para las columnas. unique = true(no se repita el
+	 *         valor ingresado)
 	 * @Size: Solo para String o Char.
 	 * @NotEmpty: Campo obligatorío.
 	 * @Min: validación del valor mínimo del campo.
-	 * @Max: validación del valor mínimo del campo.
+	 * @Max: validación del valor máximo del campo.
 	 * @PrePersist: Ejecuta el método justo antes que el objeto sea creado.
 	 * @PreUpdate: Ejecuta el método cuando el objeto es modificado.
-	 * @NotNull: que debe ser nullo nunca.
+	 * @NotNull: que nunca debe ser null.
 	 * @JoinColumn: el campo que unirá las tablas
-	 * @ManyToOne: relación uni direccional. 
-	 * fetch = FetchType.LAZY= no carga todos apoderados solo trae el
-	 *             alumno (no carga objetos en memoría).
-	 * cascade = CascadeType.PERSIST:  
-	 *   
+	 * @ManyToOne: relación uni direccional. fetch = FetchType.LAZY= no carga todos
+	 *             apoderados solo trae el alumno (no carga objetos en memoría).
+	 *             cascade = CascadeType.PERSIST:
 	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_alumno")

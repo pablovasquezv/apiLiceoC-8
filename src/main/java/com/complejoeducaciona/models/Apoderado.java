@@ -38,7 +38,7 @@ import lombok.NoArgsConstructor;
 /**
  * @author Pablo
  * @Entity: para decir a JPA Y HIBERANTE que esta será una entidad y se tiene
- *          que guardar como tal en la BD
+ * que guardar como tal en la BD
  * @Table: Para indicar que está será una tabla en la BD.
  * @Data: Para crear los gett y sett
  * @AllArgsConstructor: Constructor con parámetros
@@ -51,6 +51,27 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "apoderados")
 public class Apoderado implements Serializable {
+    /**
+     * Serializable:para hacer la persistencia del objeto y convertilo en una
+     * secuencia de Bytes para poder almacenarlo en algún medio de almacenamiento en
+     * esta caso una BD.
+     *
+     * @GeneratedValue genera automaticamente el id.
+     * @Column Personalización para las columnas. unique = true(no se repita el
+     * valor ingresado)
+     * @Size: Solo para String o Char.
+     * @NotEmpty: Campo obligatorío.
+     * @Min: validación del valor mínimo del campo.
+     * @Max: validación del valor máximo del campo.
+     * @PrePersist: Ejecuta el método justo antes que el objeto sea creado.
+     * @PreUpdate: Ejecuta el método cuando el objeto es modificado.
+     * @NotNull: que nunca debe ser null.
+     * @JoinColumn: el campo que unirá las tablas
+     * @OneToMany: fetch = FetchType.LAZY,
+     * cascade = CascadeType.ALL(cuando se cree un Apd se cree su domicilio y cuando se elimine también se borre)
+     * mappedBy = "apoderado"
+     */
+    private static final long serialVersionUID = 1L;
     /***
      * @GeneratedValue genera automaticamente el id
      * @Column Personalización para las columnas

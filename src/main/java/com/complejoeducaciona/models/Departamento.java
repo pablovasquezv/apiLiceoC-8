@@ -3,6 +3,7 @@
  */
 package com.complejoeducaciona.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -28,7 +29,7 @@ import lombok.Data;
 @Entity
 @Table(name = "departamento")
 
-public class Departamento {
+public class Departamento implements Serializable {
 	/***
 	 * @GeneratedValue genera automaticamente el id
 	 * @Column Personalización para las columnas
@@ -40,7 +41,7 @@ public class Departamento {
 	 * @PreUpdate: Ejecuta el método  cuando el objeto es modificado.
 	 * 
 	 */
-	
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_departamento")

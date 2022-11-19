@@ -56,6 +56,7 @@ public class Domicilio implements Serializable {
      * cascade = CascadeType.MERGE,
      * mappedBy = "domicilio"
      */
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_domicilio")

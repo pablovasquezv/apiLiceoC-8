@@ -1,5 +1,14 @@
 package com.complejoeducaciona.models;
 
+import lombok.Data;
+
+import java.io.Serializable;
+
+
+public class Ingope implements Serializable {
+    private static final long serialVersionUID = 1L;
+}
+/*
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -496,5 +505,5 @@ public class Ingope {
     }
     public Ingope() {
     }*/
-}
+
 

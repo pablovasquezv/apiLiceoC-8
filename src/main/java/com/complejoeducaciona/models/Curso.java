@@ -3,6 +3,7 @@
  */
 package com.complejoeducaciona.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -36,11 +37,12 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "curso")
-public class Curso {
+public class Curso implements Serializable {
     /**
      * unique = true(no se repita el valor ingresado)
      *
      */
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_curso")
@@ -74,97 +76,7 @@ public class Curso {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date updatedAt;
 
-    /**
-     *
-     */
-    public Curso() {
-        // TODO Auto-generated constructor stub
-    }
 
-    /**
-     * @param id_curso
-     * @param nombre_curso
-     * @param descripcion_curso
-     * @param createdAt
-     * @param updatedAt
-     */
-    public Curso(
-            @NotEmpty(message = "¡El campo no puede estar vacío!") @Size(min = 1, max = 180, message = "¡El campo nombre_curso no debe tener como mínimo 2 y máximo 200 carácteres!") String nombre_curso,
-            @NotEmpty(message = "¡El campo no puede estar vacío!") @Size(min = 1, max = 180, message = "¡El campo descripcion_curso no debe tener como mínimo 2 y máximo 200 carácteres!") String descripcion_curso
-    ) {
-        this.nombre_curso = nombre_curso;
-        this.descripcion_curso = descripcion_curso;
-    }
-
-    /**
-     * @return the id_curso
-     */
-    public Long getId_curso() {
-        return id_curso;
-    }
-
-    /**
-     * @param id_curso the id_curso to set
-     */
-    public void setId_curso(Long id_curso) {
-        this.id_curso = id_curso;
-    }
-
-    /**
-     * @return the nombre_curso
-     */
-    public String getNombre_curso() {
-        return nombre_curso;
-    }
-
-    /**
-     * @param nombre_curso the nombre_curso to set
-     */
-    public void setNombre_curso(String nombre_curso) {
-        this.nombre_curso = nombre_curso;
-    }
-
-    /**
-     * @return the descripcion_curso
-     */
-    public String getDescripcion_curso() {
-        return descripcion_curso;
-    }
-
-    /**
-     * @param descripcion_curso the descripcion_curso to set
-     */
-    public void setDescripcion_curso(String descripcion_curso) {
-        this.descripcion_curso = descripcion_curso;
-    }
-
-    /**
-     * @return the createdAt
-     */
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    /**
-     * @param createdAt the createdAt to set
-     */
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    /**
-     * @return the updatedAt
-     */
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    /**
-     * @param updatedAt the updatedAt to set
-     */
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 
     // Methods
     @PrePersist
