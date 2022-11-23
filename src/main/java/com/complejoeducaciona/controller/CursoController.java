@@ -1,66 +1,181 @@
 /**
- * 
+ *
  */
 package com.complejoeducaciona.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.complejoeducaciona.impl.ICursoImpleService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
 
 import com.complejoeducaciona.models.Curso;
-import com.complejoeducaciona.services.CursoService;
 
 import javax.validation.Valid;
 
 /**
  * @author Pablo
- *
  */
+@Slf4j
 @RestController
 @RequestMapping(value = ("/colegio/curso"))
 public class CursoController {
-	/*
-	 * Autowired:es Para decirle al servicio que estÃ¡ conectado con el repositorio
-	 * que esta haciendo uso de la base de datos y de los objetos. Además, crea la
-	 * inyecion de la Interfaz importada del paquete Repositorio, lo que evita la
-	 * creacion de una instancia de esta.
-	 **/
-	@Autowired
-	private ICursoImpleService iCursoImpleService;
-	//private CursoService cursoService;
-	
-	// Método para crear un Curso
-	@ResponseBody
-	@PostMapping("/create")
-	public Curso addNewCurso(@Valid @RequestBody Curso curso) {
-		// TODO Auto-generated method stub
-		//return cursoService.create(curso);
-		return iCursoImpleService.save(curso);
-	}
-	
-	// Método para actualizar un Curso
-	@PutMapping("/update")
-	public void  updateCurso(@RequestBody Curso curso) {
-		 //cursoService.update(curso);
-	}
-	
-	// Listar Todos los Cursos
-	/**@DeleteMapping("/delete/{id}")
-	@ResponseStatus(HttpStatus.OK)
-	private ResponseEntity<List<Curso>> listAllCursos(){
-		return ResponseEntity.ok(cursoService.getAllCursos());
-	}*/
-	
-	
+    /*
+     * Autowired:es Para decirle al servicio que estÃ¡ conectado con el repositorio
+     * que esta haciendo uso de la base de datos y de los objetos. Además, crea la
+     * inyecion de la Interfaz importada del paquete Repositorio, lo que evita la
+     * creacion de una instancia de esta.
+     **/
+    @Autowired
+    private ICursoImpleService iCursoImpleService;
+    //private CursoService cursoService;
+
+    // Método para crear un Curso
+    @ResponseBody
+    @PostMapping(value = "/create")
+    private ResponseEntity<Map<String, Object>> addNewCurso(@Valid @RequestBody Curso curso, BindingResult bindingResult) {
+        Map<String, Object> responseAsMap = new HashMap<>();
+        ResponseEntity<Map<String, Object>> responseEntity = null;
+        List<String> errores = null;
+        if (bindingResult.hasErrors()) {
+            errores = new ArrayList<String>();
+            for (ObjectError error : bindingResult.getAllErrors()) {
+                errores.add(error.getDefaultMessage());
+            }
+            responseAsMap.put("Errores", errores);
+            responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
+            return responseEntity;
+        }
+        try {
+            Curso cursoFromDB = iCursoImpleService.save(curso);
+            if (cursoFromDB != null) {
+                responseAsMap.put("curso", curso);
+                responseAsMap.put("Mensaje", "El Curso con ID " + curso.getId_curso() + " se creó correctamente");
+                responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.OK);
+            } else {
+                responseAsMap.put("Mensaje", "No se creo el Alumno");
+                responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap,
+                        HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } catch (DataAccessException dataAccessException) {
+            responseAsMap.put("Mensaje", "No se creo el Alumno" + dataAccessException.getMostSpecificCause().toString());
+            responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception exception) {
+            log.error("Ocurrio un Error a Crear el Curso =>" + exception.getMessage().toString());
+        }
+        return responseEntity;
+    }
+
+    // Método para actualizar un Curso
+    @PutMapping(value = "/update/{id}")
+    private ResponseEntity<Map<String, Object>> updateCurso(@PathVariable long id, @Valid @RequestBody Curso curso, BindingResult bindingResult) {
+        Map<String, Object> responseAsMap = new HashMap<>();
+        ResponseEntity<Map<String, Object>> responseEntity = null;
+        List<String> errores = null;
+        if (bindingResult.hasErrors()) {
+            errores = new ArrayList<String>();
+            for (ObjectError error : bindingResult.getAllErrors()) {
+                errores.add(error.getDefaultMessage());
+            }
+            responseAsMap.put("Erorres", errores);
+            responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.INTERNAL_SERVER_ERROR);
+            return responseEntity;
+        }
+        try {
+            Curso cursoFromDB = iCursoImpleService.update(id, curso);
+            if (cursoFromDB != null) {
+                responseAsMap.put("curso", curso);
+                responseAsMap.put("Mensaje", "El Curso con ID: " + curso.getId_curso() + " ¡Sé Actualizo exitosamente!");
+                responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.OK);
+            } else {
+                responseAsMap.put("Mensaje", "No se creo el Curso");
+                responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap,
+                        HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } catch (DataAccessException dataAccessException) {
+            responseAsMap.put("Mensaje", "No se creo el Curso" + dataAccessException.getMostSpecificCause().toString());
+            responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception exception) {
+            log.error("Ocurrio un Error al Actualizar el Curso  =>" + exception.getMessage().toString());
+        }
+        return responseEntity;
+    }
+
+    // Listar Todos los Cursos
+    @GetMapping(value = "/get/all")
+    @ResponseStatus(HttpStatus.OK)
+    private ResponseEntity<List<Curso>> findAllCursos(@RequestParam(required = false) Integer page,
+                                                      @RequestParam(required = false) Integer size) {
+        Sort sortByName = Sort.by("nombre_curso");
+        ResponseEntity<List<Curso>> responseEntity = null;
+        List<Curso> cursos = null;
+        try {
+            if (page != null & size != null) {
+                Pageable pageable = PageRequest.of(page, size, sortByName);
+                cursos = iCursoImpleService.findAllCursoPageable(pageable).getContent();
+            } else {
+                cursos = iCursoImpleService.findAllCursoSort(sortByName);
+            }
+            // Validación sí la lista tiene elementos
+            responseEntity = (cursos.size() > 0) ?
+                    new ResponseEntity<List<Curso>>(cursos, HttpStatus.OK)
+                    :
+                    new ResponseEntity<List<Curso>>(cursos, HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            log.error("Ocurrio un error a Listar los cursos => " + e);
+        }
+        return responseEntity;
+    }
+
+    @GetMapping(value = "{id}")
+    private ResponseEntity<Curso> findById(@PathVariable long id) {
+        Curso curso = null;
+        ResponseEntity<Curso> responseEntity = null;
+        try {
+            curso = iCursoImpleService.findById(id);
+            // si exite
+            responseEntity = (curso != null) ?
+                    new ResponseEntity<Curso>(curso, HttpStatus.OK)
+                    :
+                    new ResponseEntity<Curso>(curso, HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            log.error("Ocurrio un error al buscar un curso => " + e);
+        }
+        return responseEntity;
+    }
+
+    @DeleteMapping(value = "/delete/{id}")
+    private ResponseEntity<?> deleteCurso(@PathVariable Long id) {
+        //Curso curso = null;
+       // ResponseEntity<Curso> responseEntity = null;
+        try {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(iCursoImpleService.deleteCurso(id));
+            /*curso = iCursoImpleService.findById(id);
+             // si exite
+             if (curso != null) {
+             iCursoImpleService.deleteCurso(id);
+             responseEntity = new ResponseEntity<Curso>(curso, HttpStatus.NO_CONTENT);
+             return true;
+             } else {
+             responseEntity = new ResponseEntity<Curso>(curso, HttpStatus.INTERNAL_SERVER_ERROR);
+             }*/
+        } catch (Exception e) {
+            log.error("Ocurrio un error al elimnar el curso => " + e);
+        }
+        return null;
+    }
+
+
 }

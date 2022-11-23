@@ -74,11 +74,11 @@ public class AlumnoController {
                         HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
-        } catch (DataAccessException e) {
-            responseAsMap.put("Mensaje", "No se creo el Alumno" + e.getMostSpecificCause().toString());
+        } catch (DataAccessException dataAccessException) {
+            responseAsMap.put("Mensaje", "No se creo el Alumno" + dataAccessException.getMostSpecificCause().toString());
             reponseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (Exception e) {
-            log.error("Ocurrio un Error =>" + e);
+        } catch (Exception exception) {
+            log.error("Ocurrio un Error =>" + exception.getMessage().toString());
         }
 
         return reponseEntity;

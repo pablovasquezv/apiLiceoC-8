@@ -92,7 +92,7 @@ public class Matriculas implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecha_termino_matricula;
 
-    //@JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "matriculas", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private List<Alumno> alumno = new ArrayList<>();
     /**

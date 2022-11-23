@@ -79,27 +79,27 @@ public class Alumno implements Serializable {
 	@OneToMany(mappedBy = "alumno", fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
 	private List<Curso> cursos;*/
 	//@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@NotNull(message = "¡El id del apoderado no debe ser nulo!")
 	@JoinColumn(name = "id_apoderado")
 	private Apoderado apoderado;
 	
-	@NotEmpty(message = "¡El campo del Rut no debe estar vacío!")
+	@NotEmpty(message = "¡El campo del Rut Alumno no debe estar vacío!")
 	@Size(min = 9, max = 12, message = "¡El Rut debe ser ingresado mínimo 9 y máximo 10 dígitos!")
 	@Column(name = "rut_alumno")
 	private String rut_alumno;
 
-	@NotEmpty(message = "¡El campo del Nombre no debe ser vacío!")
+	@NotEmpty(message = "¡El campo del Nombre Alumno  no debe ser vacío!")
 	@Size(min = 4, max = 30, message = "¡El nombre debe tener enter 4 y 30 carácteres!")
 	@Column(name = "nombres_alumno")
 	private String nombres_alumno;
 
-	@NotEmpty(message = "¡El campo del Apellido Paterno no debe ser vacío!")
+	@NotEmpty(message = "¡El campo del Apellido Paterno Alumno no debe ser vacío!")
 	@Size(min = 4, max = 20, message = "El Apellido Paterno debe tener enter 4 y 20 carácteres!")
 	@Column(name = "apellido_paterno_alumno")
 	private String apellido_paterno_alumno;
 
-	@NotEmpty(message = "¡El campo del Apellido Paterno no debe ser vacío!")
+	@NotEmpty(message = "¡El campo del Apellido Materno Alumno no debe ser vacío!")
 	@Size(min = 4, max = 20, message = "¡El Apellido Materno debe tener enter 4 y 20 carácteres!")
 	@Column(name = "apellido_materno_alumno")
 	private String apellido_materno_alumno;
@@ -109,7 +109,7 @@ public class Alumno implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fecha_nacimiento_alumno;
 
-	@NotEmpty(message = "¡El campo Género no puede ser vacío!")
+	@NotEmpty(message = "¡El campo Género Alumno  no puede ser vacío!")
 	@Size(min = 2, max = 20, message = "El campo Genero debe tener enter 4 y 20 carácteres!")
 	@Column(name = "genero_alumno")
 	private String genero_alumno;

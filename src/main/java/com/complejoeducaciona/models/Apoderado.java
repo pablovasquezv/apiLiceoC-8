@@ -71,7 +71,7 @@ public class Apoderado implements Serializable {
      * cascade = CascadeType.ALL(cuando se cree un Apd se cree su domicilio y cuando se elimine también se borre)
      * mappedBy = "apoderado"
      */
-    private static final long serialVersionUID = 1L;
+    //private static final long serialVersionUID = 1L;
     /***
      * @GeneratedValue genera automaticamente el id
      * @Column Personalización para las columnas
@@ -92,16 +92,16 @@ public class Apoderado implements Serializable {
     private Long id_apoderado;
 
     @NotEmpty(message = "¡El Rut no debe estar vacío!")
-    @Size(min = 9, max = 12, message = "¡El campo Rut debe ser ingresado mínimo 9 y máximo 10 dígitos!")
+    @Size(min = 9, max = 12, message = "¡El campo Rut Apoderado debe ser ingresado mínimo 9 y máximo 10 dígitos!")
     @Column(name = "rut_apoderado")
     private String rut_apoderado;
 
-    @NotEmpty(message = "¡El campo del Nombre no debe ser vacío!")
+    @NotEmpty(message = "¡El campo del Nombre Apoderado  no debe ser vacío!")
     @Size(min = 4, max = 30, message = "¡El campo nombre debe tener enter 4 y 30 carácteres!")
     @Column(name = "nombres_apoderado")
     private String nombres_apoderado;
 
-    @NotEmpty(message = "¡El campo del Apellido no debe ser vacío!")
+    @NotEmpty(message = "¡El campo del Apellido Apoderado no debe ser vacío!")
     @Size(min = 4, max = 60, message = "El campo Apellido Paterno debe tener enter 4 y 20 carácteres!")
     @Column(name = "apellidos_apoderado")
     private String apellidos_apoderado;
@@ -131,8 +131,8 @@ public class Apoderado implements Serializable {
     private Domicilio domicilio;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "apoderado", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    private List<Alumno> alumno = new ArrayList<>();
+    @OneToMany( fetch = FetchType.LAZY, cascade = CascadeType.MERGE,mappedBy = "apoderado")
+    private List<Alumno> alumno;
 
     // Esto no permitirá que el campo createdAt sea modificado después de su
     // creación.
