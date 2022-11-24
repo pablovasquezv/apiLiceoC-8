@@ -156,26 +156,22 @@ public class CursoController {
         return responseEntity;
     }
 
-    @DeleteMapping(value = "/delete/{id}")
-    private ResponseEntity<?> deleteCurso(@PathVariable Long id) {
-        //Curso curso = null;
-       // ResponseEntity<Curso> responseEntity = null;
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    private ResponseEntity<Curso> deleteById(@PathVariable("id") Long id) {
+        // TODO Auto-generated method stub
+        ResponseEntity<Curso> responseEntity = null;
         try {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(iCursoImpleService.deleteCurso(id));
-            /*curso = iCursoImpleService.findById(id);
-             // si exite
-             if (curso != null) {
-             iCursoImpleService.deleteCurso(id);
-             responseEntity = new ResponseEntity<Curso>(curso, HttpStatus.NO_CONTENT);
-             return true;
-             } else {
-             responseEntity = new ResponseEntity<Curso>(curso, HttpStatus.INTERNAL_SERVER_ERROR);
-             }*/
-        } catch (Exception e) {
-            log.error("Ocurrio un error al elimnar el curso => " + e);
+            if (iCursoImpleService.findById(id) !=null){
+                iCursoImpleService.deleteCursoById(id);
+                responseEntity= new ResponseEntity <>( HttpStatus.OK);
+            }else {
+                responseEntity= new ResponseEntity <>( HttpStatus.NO_CONTENT);
+            }
+        }catch (Exception e){
+            log.error("Ocurrio un error al eliminar el curso => " + e);
         }
-        return null;
+        return responseEntity;
     }
-
 
 }

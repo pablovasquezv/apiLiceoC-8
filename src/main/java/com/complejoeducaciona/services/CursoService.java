@@ -3,6 +3,7 @@
  */
 package com.complejoeducaciona.services;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,41 +81,14 @@ public class CursoService implements ICursoImpleService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public boolean deleteCurso(long id) throws Exception {
+    public Object deleteCursoById(Long id) throws Exception {
         try {
-            if (iCursoRepository.existsById(id)) {
-                iCursoRepository.deleteById(id);
-                return true;
-            } else {
-                log.error("¡No exite el Id del Curso!");
-            }
-        } catch (Exception e) {
-            // TODO: handle exception
-            throw new Exception(e.getCause());
+            iCursoRepository.deleteById(id);
         }
-        return true;
+        catch (Exception e){
+            log.error("Ocurrio un Errror al actualizar el Curso =>" + e);
+        }
+        return null;
     }
-
-    // Método para Actualizar un Curso
-    public Curso update(Curso curso) {
-        return iCursoRepository.save(curso);
-    }
-
-    // Método para Crear listar todas los Cursos
-    public List<Curso> getAllCursos() {
-        return iCursoRepository.findAll();
-    }
-
-    // Método para Eliminar un Departamento
-    public void deleteCurso(Curso curso) {
-        iCursoRepository.delete(curso);
-    }
-
-    // Método para obtener una Departamento en Específico
-    public Optional<Curso> findById(Long id_curso) {
-        return iCursoRepository.findById(id_curso);
-    }
-
 
 }

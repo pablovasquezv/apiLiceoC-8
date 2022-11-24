@@ -11,7 +11,7 @@ public interface IAlumnoImplementServices {
 
     public Alumno save(Alumno alumno) throws Exception;
 
-    public Alumno update(Alumno alumno) throws Exception;
+    public Alumno update(Long id, Alumno alumno) throws Exception;
 
     public List<Alumno> findAll(Sort sort) throws Exception;
 
@@ -19,5 +19,5 @@ public interface IAlumnoImplementServices {
 
     public Alumno findById(long id) throws Exception;
 
-    public void deleteById(long id) throws Exception;
+    public Object deleteAlumnoById(Long id) throws Exception;
 }

@@ -13,6 +13,7 @@ public interface ICursoImpleService {
     public List<Curso> findAllCursoSort(Sort sort) throws Exception;
     public Page<Curso> findAllCursoPageable(Pageable page) throws Exception;
     public Curso findById(long id) throws Exception;
-    public boolean deleteCurso(long id)throws Exception;
+
+    public Object deleteCursoById(Long id) throws Exception;
 
 }

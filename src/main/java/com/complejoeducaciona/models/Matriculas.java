@@ -91,11 +91,11 @@ public class Matriculas implements Serializable {
     @Column(name = "fecha_termino_matricula")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecha_termino_matricula;
-
+    /**
     @JsonIgnore
     @OneToMany(mappedBy = "matriculas", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private List<Alumno> alumno = new ArrayList<>();
-    /**
+
      * @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
      * @NotNull(message = "¡El id del Curso no debe ser nulo!")
      * @JoinColumn(name = "id_curso")

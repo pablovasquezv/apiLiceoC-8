@@ -4,6 +4,7 @@
 package com.complejoeducaciona.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.complejoeducaciona.impl.IAlumnoImplementServices;
 import com.complejoeducaciona.models.Apoderado;
@@ -67,14 +68,18 @@ public class AlumnoService implements IAlumnoImplementServices {
     }
 
     @Override
-    @Transactional(readOnly = false)
-    public Alumno update(Alumno alumno) {
-        /** Apoderado apoderado = apoderadoRepository.findById
-         (alumno.getApoderado().getId_apoderado()).orElse(null);
-         alumno.setApoderado(apoderado);
-         return iAlumnoRepository.save(alumno);*/
-        return null;
+    public Alumno update(Long id, Alumno alumno) throws Exception {
+        try {
+            Optional<Alumno> optionalAlumno= iAlumnoRepository.findById(id);
+            Alumno alumnoUpdate=optionalAlumno.get();
+            alumnoUpdate=iAlumnoRepository.save(alumno);
+            return alumno;
+        }catch (Exception e){
+            log.error("Falló al actualización del  Alumno");
+        }
+        return alumno;
     }
+
 
     @Override
     @Transactional(readOnly = true)
@@ -96,7 +101,14 @@ public class AlumnoService implements IAlumnoImplementServices {
 
     @Override
     @Transactional(readOnly = false)
-    public void deleteById(long id) {
-        iAlumnoRepository.deleteById(id);
+    public Object deleteAlumnoById(Long id) throws Exception {
+        try {
+            log.error("Método deleteAlumnoById eliminar el Alumno =>");
+            iAlumnoRepository.deleteById(id);
+        }catch (Exception e){
+            log.error("Ocurrio un erro en Método deleteAlumnoById al eliminar el Alumno =>" +e);
+        }
+        return null;
     }
+
 }

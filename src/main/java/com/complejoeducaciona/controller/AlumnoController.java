@@ -90,7 +90,7 @@ public class AlumnoController {
     @ResponseBody()
     private void updateAumno(@PathVariable long id, @Valid @RequestBody Alumno alumno) {
         try {
-            iAlumnoImplementServices.update(alumno);
+            iAlumnoImplementServices.update(id, alumno);
         } catch (Exception e) {
             log.error("Ocurrio un Error =>" + e);
         }
@@ -120,7 +120,7 @@ public class AlumnoController {
                 responseEntity = new ResponseEntity<List<Alumno>>(HttpStatus.NO_CONTENT);
             }
         } catch (Exception e) {
-            log.error("Ocurrio un error =>"+e);
+            log.error("Ocurrio un error =>" + e);
         }
         return responseEntity;
     }
@@ -149,27 +149,21 @@ public class AlumnoController {
 
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    private ResponseEntity<Alumno> deleteById(@PathVariable int id) {
+    private ResponseEntity<Alumno> deleteById(@PathVariable("id") Long id) {
         // TODO Auto-generated method stub
-
-        Alumno alumnos = null;
         ResponseEntity<Alumno> responseEntity = null;
         try {
-
-            alumnos = iAlumnoImplementServices.findById(id);
-            // si exite
-            if (alumnos != null) {
-                // retorna un 200
-                iAlumnoImplementServices.deleteById(id);
-                responseEntity = new ResponseEntity<Alumno>(HttpStatus.OK);
+            if (iAlumnoImplementServices.findById(id) != null) {
+                log.info("Se va a eliminar");
+                iAlumnoImplementServices.deleteAlumnoById(id);
+                log.info("Se elimino");
+                responseEntity = new ResponseEntity<>(HttpStatus.OK);
             } else {
-                // retorna un 202
-                responseEntity = new ResponseEntity<Alumno>(HttpStatus.NO_CONTENT);
+                responseEntity = new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
         } catch (Exception e) {
-            log.error("Ocurrio un Error =>" + e);
+            log.error("Ocurrio un error en el controlador al eliminar el Alumno de => " + e);
         }
-
         return responseEntity;
     }
 }

@@ -79,14 +79,14 @@ public class Alumno implements Serializable {
 	@OneToMany(mappedBy = "alumno", fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
 	private List<Curso> cursos;*/
 	//@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@NotNull(message = "¡El id del apoderado no debe ser nulo!")
 	@JoinColumn(name = "id_apoderado")
 	private Apoderado apoderado;
 	
 	@NotEmpty(message = "¡El campo del Rut Alumno no debe estar vacío!")
 	@Size(min = 9, max = 12, message = "¡El Rut debe ser ingresado mínimo 9 y máximo 10 dígitos!")
-	@Column(name = "rut_alumno")
+	@Column(name = "rut_alumno",unique = true)
 	private String rut_alumno;
 
 	@NotEmpty(message = "¡El campo del Nombre Alumno  no debe ser vacío!")
