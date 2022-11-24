@@ -53,15 +53,13 @@ public class AlumnoService implements IAlumnoImplementServices {
     @Transactional(readOnly = false)
     public Alumno save(Alumno alumno) throws JsonProcessingException {
         Alumno respuesta = new Alumno();
-        Apoderado apoderado= iApoderadoRepository.findById(alumno.getApoderado().getId_apoderado()).orElse(null);
+        Apoderado apoderado = iApoderadoRepository.findById(alumno.getApoderado().getId_apoderado()).orElse(null);
         alumno.setApoderado(apoderado);
         /*
         Matriculas  matriculas= iMatriculasRepository.findById(alumno.getMatriculas().getId_matricula()).orElse(null);
         alumno.setMatriculas(matriculas);*/
-        log.info("---Inicio de creción Alumno----"+utils.imprimirLogEntrada(alumno));
+        log.info("---Inicio de creción Alumno----" + objectMapper.writeValueAsString(alumno));
         respuesta = iAlumnoRepository.save(alumno);
-        log.info("Json de Salida =>"+utils.imprimirLogSalida(alumno));
-        log.info("----Fin de método Creación Alumno----");
         log.info("Alumno creado =>" + objectMapper.writeValueAsString(alumno));
         return respuesta;
 
@@ -70,11 +68,12 @@ public class AlumnoService implements IAlumnoImplementServices {
     @Override
     public Alumno update(Long id, Alumno alumno) throws Exception {
         try {
-            Optional<Alumno> optionalAlumno= iAlumnoRepository.findById(id);
-            Alumno alumnoUpdate=optionalAlumno.get();
-            alumnoUpdate=iAlumnoRepository.save(alumno);
+            Optional<Alumno> optionalAlumno = iAlumnoRepository.findById(id);
+            Alumno alumnoUpdate = optionalAlumno.get();
+            alumnoUpdate = iAlumnoRepository.save(alumno);
+            log.info("---Actualización Alumno----" + objectMapper.writeValueAsString(iAlumnoRepository.save(alumno)));
             return alumno;
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("Falló al actualización del  Alumno");
         }
         return alumno;
@@ -105,8 +104,8 @@ public class AlumnoService implements IAlumnoImplementServices {
         try {
             log.error("Método deleteAlumnoById eliminar el Alumno =>");
             iAlumnoRepository.deleteById(id);
-        }catch (Exception e){
-            log.error("Ocurrio un erro en Método deleteAlumnoById al eliminar el Alumno =>" +e);
+        } catch (Exception e) {
+            log.error("Ocurrio un erro en Método deleteAlumnoById al eliminar el Alumno =>" + e);
         }
         return null;
     }

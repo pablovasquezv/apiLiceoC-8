@@ -3,11 +3,11 @@
   "apoderado": {
     "id_apoderado": 2
   },
-  "rut_alumno": "17.123.343-9",
-  "nombres_alumno": "Marcelo Lisandro",
-  "apellido_paterno_alumno": "FRIERE",
-  "apellido_materno_alumno": "LEAL",
-  "fecha_nacimiento_alumno": "2022-11-21T01:29:17.466Z",
+  "rut_alumno": "17.123.143-9",
+  "nombres_alumno": "José Luis",
+  "apellido_paterno_alumno": "MONDACA",
+  "apellido_materno_alumno": "VASQUEZ",
+  "fecha_nacimiento_alumno": "1989-11-21T01:29:17.466Z",
   "genero_alumno": "MASCULINO",
   "edad_alumno": 34,
   "domicilio": {
@@ -20,13 +20,16 @@
     "updatedAt": "2022-11-21T01:29:17.466Z"
   },
   "matriculas": {
-    "codigo_matricula": "91281-p",
+    "codigo_matricula": "912813-p",
     "valor_matricula": 10000,
-    "fecha_ingreso_matricula": "2022-11-22T16:44:12.789Z",
-    "fecha_termino_matricula": "2022-11-22T16:44:12.789Z",
-    "createdAt": "2022-11-22T16:44:12.789Z",
-    "updatedAt": "2022-11-22T16:44:12.789Z"
+    "fecha_ingreso_matricula": "2022-11-24T23:00:51.342Z",
+    "fecha_termino_matricula": "2022-11-24T23:00:51.342Z",
+    "cursos": {
+      "id_curso": 8
+    },
+    "createdAt": "2022-11-24T23:00:51.343Z",
+    "updatedAt": "2022-11-24T23:00:51.343Z"
   },
-  "createdAt": "2022-11-22T16:44:12.789Z",
-  "updatedAt": "2022-11-22T16:44:12.789Z"
+  "createdAt": "2022-11-24T23:00:51.343Z",
+  "updatedAt": "2022-11-24T23:00:51.343Z"
 }

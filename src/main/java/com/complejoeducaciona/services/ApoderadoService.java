@@ -37,11 +37,10 @@ public class ApoderadoService implements IApoderadoImplementServices {
     @Transactional(readOnly = false)
     public Apoderado save(Apoderado apoderado) {
         Apoderado repuest= new Apoderado();
-        log.info("---Inicio de creción Apoderador----");
         log.info("---Inicio de creción Apoderado ----"+utils.imprimirLogEntrada(apoderado));
         repuest=iApoderadoRepository.save(apoderado);
         log.info("Json de Salida =>"+utils.imprimirLogSalida(repuest));
-        log.info("----Fin de método Creación Cliente----");
+        log.info("----Fin de método Creación Apoderado----");
         return repuest;
     }
 

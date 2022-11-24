@@ -6,17 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import javax.validation.constraints.Max;
@@ -55,7 +45,7 @@ public class Matriculas implements Serializable {
      *
      * @GeneratedValue genera automaticamente el id.
      * @Column Personalización para las columnas. unique = true(no se repita el
-     *         valor ingresado)
+     * valor ingresado)
      * @Size: Solo para String o Char.
      * @NotEmpty: Campo obligatorío.
      * @Min: validación del valor mínimo del campo.
@@ -65,8 +55,8 @@ public class Matriculas implements Serializable {
      * @NotNull: que nunca debe ser null.
      * @JoinColumn: el campo que unirá las tablas
      * @ManyToOne: relación uni direccional. fetch = FetchType.LAZY= no carga todos
-     *             apoderados solo trae el alumno (no carga objetos en memoría).
-     *             cascade = CascadeType.PERSIST:
+     * apoderados solo trae el alumno (no carga objetos en memoría).
+     * cascade = CascadeType.PERSIST:
      */
     private static final long serialVersionUID = 1L;
     @Id
@@ -91,19 +81,14 @@ public class Matriculas implements Serializable {
     @Column(name = "fecha_termino_matricula")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecha_termino_matricula;
-    /**
-    @JsonIgnore
-    @OneToMany(mappedBy = "matriculas", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    private List<Alumno> alumno = new ArrayList<>();
 
-     * @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-     * @NotNull(message = "¡El id del Curso no debe ser nulo!")
-     * @JoinColumn(name = "id_curso")
-     * private List<Curso> cursos = new ArrayList<Curso>();
-     */
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @NotNull(message = "¡El id del curso no debe ser nulo!")//comentar antes de ejecutar muestra erro altertable
+    @JoinColumn(name = "id_curso")
+    private Curso cursos ;
 
-// Esto no permitirá que el campo createdAt sea modificado después de su
-// creación.
+
+    // Esto no permitirá que el campo createdAt sea modificado después de su creación.
     @Column(updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createdAt;

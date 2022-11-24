@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.complejoeducaciona.impl.ICursoImpleService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,6 +35,9 @@ public class CursoService implements ICursoImpleService {
     @Autowired
     private ICursoRepository iCursoRepository;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     // Método para Crear un Curso
     @Override
     @Transactional(readOnly = false)
@@ -41,6 +45,7 @@ public class CursoService implements ICursoImpleService {
         try {
             log.info("---");
             curso = iCursoRepository.save(curso);
+            log.info("Creación Curso =>" + objectMapper.writeValueAsString(iCursoRepository.save(curso)));
         } catch (Exception e) {
             log.error("Ocurrior un erro al Crear el Curso =>" + e);
 
@@ -77,15 +82,14 @@ public class CursoService implements ICursoImpleService {
     @Override
     @Transactional(readOnly = false)
     public Curso findById(long id) throws Exception {
-            return iCursoRepository.findById(id);
+        return iCursoRepository.findById(id);
     }
 
     @Override
     public Object deleteCursoById(Long id) throws Exception {
         try {
             iCursoRepository.deleteById(id);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             log.error("Ocurrio un Errror al actualizar el Curso =>" + e);
         }
         return null;
