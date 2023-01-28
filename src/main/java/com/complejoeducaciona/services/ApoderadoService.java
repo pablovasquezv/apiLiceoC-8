@@ -4,7 +4,6 @@
 package com.complejoeducaciona.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.complejoeducaciona.impl.IApoderadoImplementServices;
 import com.complejoeducaciona.utils.Utils;
@@ -14,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.complejoeducaciona.models.Apoderado;
+import com.complejoeducaciona.modelosIngope.Apoderado;
 import com.complejoeducaciona.repository.IApoderadoRepository;
 import org.springframework.transaction.annotation.Transactional;
 

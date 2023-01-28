@@ -3,7 +3,7 @@
  */
 package com.complejoeducaciona.repository;
 
-import com.complejoeducaciona.models.Alumno;
+import com.complejoeducaciona.modelosIngope.Alumno;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

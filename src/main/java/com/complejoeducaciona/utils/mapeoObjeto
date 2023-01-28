@@ -1,0 +1,380 @@
+package com.complejoeducaciona.utils;
+
+import cl.banchile.ingope.Ingope;
+import cl.banchile.ingope.PIngresarInstruccions;
+import cl.banchile.starter.listener.ingope.dattrx.api.to.PIngresarInstruccion;
+import cl.banchile.starter.listener.ingope.dattrx.api.to.PIngresaroperacion;
+import cl.banchile.starter.listener.ingope.dattrx.utils.Utils;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import java.io.EOFException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;*/
+@Slf4j
+public class MapearObjetos  {
+    private ObjectMapper objectMapper;
+    private cl.banchile.starter.listener.ingope.dattrx.api.to.PIngresarInstruccions pInstrucciones;
+    private cl.banchile.starter.listener.ingope.dattrx.api.to.PIngresarInstruccion pInstruccion;
+    private PIngresaroperacion ingreso;
+    private PIngresarInstruccions instruccions;
+    private List<PIngresarInstruccions.PIngresarInstruccion> instruccion;
+    private Ingope ingope;
+    public MapearObj() {
+        objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        ingreso = new PIngresaroperacion();
+        pInstrucciones = new cl.banchile.starter.listener.ingope.dattrx.api.to.PIngresarInstruccions();
+        pInstruccion = new PIngresarInstruccion();
+        ingope = new Ingope();
+        instruccions = new PIngresarInstruccions();
+        instruccion = new ArrayList<>();
+    }
+    public Object validaCampos(JSONObject jsonObject, String objeto, String llave, String opcion) {
+        Object value = null;
+        Object casoError = null;
+        try {
+            if (validarIsNullOrEmpty(jsonObject, objeto, llave)) {
+                value = obtenerObjeto(jsonObject, objeto, llave);
+                switch (opcion) {
+                    case "Byte":
+                        value = Utils.castByte(value);
+                        break;
+                    case "String":
+                        /*if(llave.equals("indicador18q")){
+                            value="N";
+                        }*/
+                        value = Utils.castString(value);
+                        break;
+                    case "Short":
+                        value = Utils.castShort(value);
+                        break;
+                    case "Integer":
+                        value = Utils.castInteger(value);
+                        break;
+                    case "Float":
+                        value = Utils.castFloat(value);
+                        break;
+                    case "Long":
+                        value = Utils.castLong(value);
+                        break;
+                }
+            }
+        } catch (Exception ex) {
+            log.error("Ocurrio un error en Método validaCampos =>"+ex);
+        }
+        return value;
+    }
+    public Object obtenerObjeto(JSONObject jsonObject, String objeto, String llave) {
+        Object value = null;
+        if (objeto == null) {
+            value = jsonObject.get(llave);
+        } else {
+            value = jsonObject.getJSONObject(objeto).get(llave);
+        }
+        return value;
+    }
+    public Boolean validarIsNullOrEmpty(JSONObject jsonObject, String objeto, String llave) {
+        Boolean valid = false;
+        if (objeto == null) {
+            if (!jsonObject.isNull(llave)) {
+                valid = true;
+            }
+        } else {
+            if (!jsonObject.getJSONObject(objeto).isNull(llave)) {
+                valid = true;
+            }
+        }
+        return valid;
+    }
+    public PIngresaroperacion mapeoIngreso(JSONObject jsonObject) {
+        try {
+            if (!jsonObject.isNull("acciones")) {
+                jsonObject.put("operacionAcciones", jsonObject.getJSONObject("acciones"));
+            }
+            if (!jsonObject.isNull("fondosMutuos")) {
+                jsonObject.put("operacionFondosMutuos", jsonObject.getJSONObject("fondosMutuos"));
+            }
+            if (!jsonObject.isNull("listaInstruccion")) {
+                crearInstruccionesIngreso(jsonObject.getJSONArray("listaInstruccion"));
+            }
+            jsonObject.put("operacion",
+                    validaCampos(jsonObject, null,"operacionProducto","String"));
+            jsonObject.put("montoOperacionString",
+                    validaCampos(jsonObject, null,"montoOperacion","String"));
+                    /*(!jsonObject.isNull("montoOperacion"))
+                            ? jsonObject.getString("montoOperacion")
+                            : "");*/
+            jsonObject.put("cuentaInversion",
+                    validaCampos(jsonObject, null,"cuentaDeInversion","String"));
+                    /*(!jsonObject.isNull("cuentaDeInversion"))
+                            ? String.valueOf(jsonObject.getInt("cuentaDeInversion"))
+                            : "");*/
+            ingreso = objectMapper.readValue(jsonObject.toString(), PIngresaroperacion.class);
+            ingreso.setpIngresarInstruccions(pInstrucciones);
+        } catch (Exception e) {
+            log.error("Ha ocurrido un error en MapearObj =>PIngresaroperacion", e);
+        }
+        return ingreso;
+    }
+    private void crearInstruccionesIngreso(JSONArray listaInstruccion) {
+        listaInstruccion.iterator().forEachRemaining(o ->
+        {
+            JSONObject result = (JSONObject) o;
+            result.remove("beneficiario");
+            result.remove("aprobarPagoaTerceros");
+            result.remove("administrarBeneficiarios");
+            result.put("numeroCuentaCorriente",
+                    validaCampos(result, null,"numeroCuentaCorriente","String"));
+            result.put("monto",
+                    validaCampos(result,null, "monto","String"));
+            result.put("codigoModalidad",
+                    validaCampos(result,null,"codigoModalidad","Float"));
+                    /*(!result.isNull("codigoModalidad"))
+                            ? Float.parseFloat(result.getString("codigoModalidad"))
+                            : 0.0);*/
+            result.put("bancoOrigen",
+                    validaCampos(result,null,"bancoOrigen","Integer"));
+                    /*(!result.isNull("bancoOrigen"))
+                            ? Integer.valueOf(result.getString("bancoOrigen"))
+                            : 0);*/
+            result.put("bancoDeposito",
+                    validaCampos(result,null,"bancoDeposito","Integer"));
+                    /*(!result.isNull("bancoDeposito"))
+                            ? Integer.valueOf(result.getString("bancoDeposito"))
+                            : 0);*/
+            result.put("cuentaDeposito",
+                    validaCampos(result,null,"cuentaDeposito","String"));
+            result.put("moneda",
+                    validaCampos(result,null,"moneda", "String"));
+            result.put("tipoInstruccion",
+                    validaCampos(result, null, "tipoInstruccion","String"));
+            result.put("rutEmpleadoIngreso",
+                    validaCampos(result,null,"rutEmpleadoIngreso","Integer"));
+                    /*(!result.isNull("rutEmpleadoIngreso"))
+                            ? Integer.valueOf(result.getString("rutEmpleadoIngreso"))
+                            : 0);*/
+            result.put("indicadorAvanzaAutomatico",
+                    validaCampos(result,null,"indicadorAvanzaAutomaticoInstruccion","String"));
+                    /*(!result.isNull("indicadorAvanzaAutomaticoInstruccion"))
+                            ? result.getString("indicadorAvanzaAutomaticoInstruccion")
+                            : "");*/
+            result.put("numerodelaInstruccion",
+                    validaCampos(result,null,"numeroInstruccion","String"));
+                    /*(!result.isNull("numeroInstruccion"))
+                            ? result.getString("numeroInstruccion")
+                            : "");*/
+            generaClaseInstruccionsIngreso(result.toString());
+        });
+    }
+    public Ingope mapeoIngope(JSONObject jsonObject) {
+        try {
+            jsonObject.put("operacion",
+                    validaCampos(jsonObject,null,"operacionProducto","String"));
+            Object idTransaccion = validaCampos(jsonObject,null,"idProceso","Long");
+            Object idProceso= validaCampos(jsonObject,null,"identificadorTransaccion","String");
+            jsonObject.put("identificadorTransaccion",idTransaccion);
+            jsonObject.put("idProceso",idProceso);
+            jsonObject.put("identificadorCliente",
+                    validaCampos(jsonObject,null,"identificadorCliente","Integer"));
+            jsonObject.put("cuentaInversion",
+                    validaCampos(jsonObject,null,"cuentaDeInversion","Byte"));
+            jsonObject.put("cuentaInversion",
+                    validaCampos(jsonObject,null,"cuentaInversion","Byte"));
+            jsonObject.put("codigoMoneda",
+                    validaCampos(jsonObject,null,"codigoMoneda","String"));
+            jsonObject.put("codigoMoneda",
+                    validaCampos(jsonObject,null,"codigoMoneda","String"));
+            jsonObject.put("montoOperacionString",
+                    validaCampos(jsonObject,null,"montoOperacion","String"));
+            // para casos donde los canales no envíen unidad transadas
+            jsonObject.put("unidadesTransadas",
+                    validaCampos(jsonObject,null,"unidadesTransadas","Float"));
+            jsonObject.put("rutEmpleadoEjecutivoConect",
+                    validaCampos(jsonObject,null,"rutEmpleadoEjecutivoConect","Integer"));
+            jsonObject.put("usuarioEjecutivoConectado",
+                    validaCampos(jsonObject,null,"usuarioEjecutivoConectado","String"));
+            jsonObject.put("rutEmpleadoEjecutivoOperac",
+                    validaCampos(jsonObject,null,"rutEmpleadoEjecutivoOperac","Integer"));
+            jsonObject.put("observacion",
+                    validaCampos(jsonObject,null,"observacion","String"));
+            jsonObject.put("canal",
+                    validaCampos(jsonObject,null,"canal","String"));
+            jsonObject.put("identificadorCanalAtencion",
+                    validaCampos(jsonObject,null,"identificadorCanalAtencion","Byte"));
+            jsonObject.put("indicadorAvanzaAutomatico",
+                    validaCampos(jsonObject,null,"indicadorAvanzaAutomatico","String"));
+            if (!jsonObject.isNull("divisa")) {
+                //jsonObject.put("divisa", jsonObject.getJSONObject("divisa"));
+                jsonObject.getJSONObject("divisa").put("codigoOficina",
+                        validaCampos(jsonObject,"divisa","codigoOficina","Short"));
+                jsonObject.getJSONObject("divisa").put("codigoMonedaPago",
+                        validaCampos(jsonObject,"divisa","codigoMonedaPago","String"));
+                jsonObject.getJSONObject("divisa").put("codigoIso",
+                        validaCampos(jsonObject,"divisa","codigoIso","String"));
+                jsonObject.getJSONObject("divisa").put("codigoMonedaCobro",
+                        validaCampos(jsonObject,"divisa","codigoMonedaCobro","String"));
+                jsonObject.getJSONObject("divisa").put("montoTotalPago",
+                        validaCampos(jsonObject,"divisa","montoTotalPago","Float"));
+                jsonObject.getJSONObject("divisa").put("paridad",
+                        validaCampos(jsonObject,"divisa","paridad","Float"));
+                jsonObject.getJSONObject("divisa").put("precioCompra",
+                        validaCampos(jsonObject,"divisa","precioCompra","Float"));
+                jsonObject.getJSONObject("divisa").put("precioMedio",
+                        validaCampos(jsonObject,"divisa","precioMedio","Float"));
+                jsonObject.getJSONObject("divisa").put("precioVenta",
+                        validaCampos(jsonObject,"divisa","precioVenta","String"));
+                jsonObject.getJSONObject("divisa").put("montoComisionCalculada",
+                        validaCampos(jsonObject,"divisa","montoComisionCalculada","String"));
+                jsonObject.getJSONObject("divisa").put("montoComisionRealCalculada",
+                        validaCampos(jsonObject,"divisa","montoComisionRealCalculada","String"));
+            }
+            if (!jsonObject.isNull("acciones")) {
+                jsonObject.getJSONObject("acciones").put("cantidadOrden",
+                        validaCampos(jsonObject,"acciones","cantidadOrden","Byte"));
+                        /*(!jsonObject.getJSONObject("acciones").isNull("cantidadOrden"))
+                                ? Byte.parseByte(jsonObject.getJSONObject("acciones").getString("cantidadOrden"))
+                                : 0);*/
+                jsonObject.getJSONObject("acciones").put("comision",
+                        validaCampos(jsonObject,"acciones","comision","Byte"));
+                        /*(!jsonObject.getJSONObject("acciones").isNull("comision"))
+                                ? Byte.parseByte(jsonObject.getJSONObject("acciones").getString("comision"))
+                                : 0);*/
+                jsonObject.getJSONObject("acciones").put("numeroCuentaCorriente",
+                        validaCampos(jsonObject,"acciones","numeroCuentaCorriente","Integer"));
+                        /*
+                        (!jsonObject.getJSONObject("acciones").isNull("numeroCuentaCorriente"))
+                                ? Integer.valueOf(jsonObject.getJSONObject("acciones").getString("numeroCuentaCorriente"))
+                                : 0);*/
+                jsonObject.put("operacionAcciones", jsonObject.getJSONObject("acciones"));
+                jsonObject.getJSONObject("operacionAcciones").put("montoLimite",
+                        validaCampos(jsonObject,"acciones","precioLimite","Short"));
+                        /*
+                        (!jsonObject.getJSONObject("acciones").isNull("precioLimite"))
+                                ? Short.valueOf(jsonObject.getJSONObject("acciones").getString("precioLimite"))
+                                : 0);*/
+                jsonObject.getJSONObject("operacionAcciones").put("montoOrden",
+                        validaCampos(jsonObject,"acciones","precioOrden","Short"));
+                        /*
+                        (!jsonObject.getJSONObject("acciones").isNull("precioOrden"))
+                                ? Short.valueOf(jsonObject.getJSONObject("acciones").getString("precioOrden"))
+                                : 0);*/
+            }
+            if (!jsonObject.isNull("fondosMutuos")) {
+                jsonObject.getJSONObject("fondosMutuos").put("idOrigenFondo",
+                        validaCampos(jsonObject,"fondosMutuos","idOrigenFondo","Byte"));
+                        /*(jsonObject.getJSONObject("fondosMutuos").isNull("idOrigenFondo"))
+                                ? Byte.parseByte(jsonObject.getJSONObject("fondosMutuos").getString("idOrigenFondo"))
+                                : 0);*/
+                jsonObject.getJSONObject("fondosMutuos").put("codigoPlanCuenta",
+                        validaCampos(jsonObject,"fondosMutuos","codigoPlanCuenta","Byte"));
+                        /*(!jsonObject.getJSONObject("fondosMutuos").isNull("codigoPlanCuenta"))
+                                ? Byte.parseByte(jsonObject.getJSONObject("fondosMutuos").getString("codigoPlanCuenta"))
+                                : 0);*/
+                jsonObject.getJSONObject("fondosMutuos").put("numeroCuenta",
+                        validaCampos(jsonObject,"fondosMutuos","numeroCuenta","Float"));
+                        /*(!jsonObject.getJSONObject("fondosMutuos").isNull("numeroCuenta"))
+                                ? Float.parseFloat(jsonObject.getJSONObject("fondosMutuos").getString("numeroCuenta"))
+                                : 0.0);*/
+                jsonObject.put("operacionFondosMutuos", jsonObject.getJSONObject("fondosMutuos"));
+                jsonObject.getJSONObject("operacionFondosMutuos").put("indicador18Q",
+                        validaCampos(jsonObject,"fondosMutuos","indicador18q","String"));
+                        /*(!jsonObject.getJSONObject("fondosMutuos").isNull("indicador18q"))
+                                ? jsonObject.getJSONObject("fondosMutuos").getString("indicador18q")
+                                : "N");*/
+            }
+            if (!jsonObject.isNull("listaInstruccion")) {
+                crearInstruccionesIngope(jsonObject.getJSONArray("listaInstruccion"));
+                /*
+                JSONObject aprobarPagoaTerceros = result.getJSONObject("aprobarPagoaTerceros");
+                aprobarPagoaTerceros.put("indicadorAvanzaAutomatico", aprobarPagoaTerceros.getString("indicadorAvanzaAutomaticoTercero"));
+                aprobarPagoaTerceros.put("observacion", aprobarPagoaTerceros.getString("observacionTercero"));
+                if (!aprobarPagoaTerceros.isNull("monedaInstruccion") && !aprobarPagoaTerceros.isNull("monedaOperacion")
+                        && !aprobarPagoaTerceros.isNull("montoDolar") && !aprobarPagoaTerceros.isNull("instruccionMontos")) {
+                    JSONObject montos = new JSONObject();
+                    montos.put("dolar", aprobarPagoaTerceros.getString("montoDolar"));
+                    montos.put("instruccion", aprobarPagoaTerceros.getString("instruccionMontos"));
+                    montos.put("monedaOperacion", aprobarPagoaTerceros.getString("monedaOperacion"));
+                    montos.put("monedaInstruccion", aprobarPagoaTerceros.getString("monedaInstruccion"));
+                    aprobarPagoaTerceros.put("montos", montos);
+                }
+                result.put("datosReinversion", result.getJSONObject("reInversion"));
+                JSONObject reinversion = result.getJSONObject("datosReinversion");
+                reinversion.put("datosReinversion", result.getJSONObject("reInversion"));
+                reinversion.put("codigoModalidad", reinversion.getString("codigoModalidadReinversion"));
+                reinversion.put("indicadorAvanzaAutomatico", reinversion.getString("indicadorAvanzaAutomaticoReinversion"));
+                if (!reinversion.isNull("divisa")) {
+                    jsonObject.put("divisa", reinversion.getJSONObject("divisa"));
+                }
+                if (!reinversion.isNull("fondosMutuos")) {
+                    reinversion.put("operacionFondosMutuos", reinversion.getJSONObject("fondosMutuos"));
+                    //protected String codigoOperacion;
+                    reinversion.getJSONObject("operacionFondosMutuos").put("indicador18Q", reinversion.getJSONObject("operacionFondosMutuos").getString("indicador18q"));
+                }
+                reinversion.put("pIngresarInstruccions", reinversion.getJSONArray("listaInstruccionRNV").get(0));
+                JSONObject instruccionRvn = reinversion.getJSONObject("pIngresarInstruccions");
+                JSONObject aprobarPagoTercero = instruccionRvn.getJSONObject("aprobarPagoaTerceros");
+                if (!aprobarPagoTercero.isNull("monedaInstruccion") && !aprobarPagoTercero.isNull("monedaOperacion")
+                        && !aprobarPagoTercero.isNull("montoDolar") && !aprobarPagoTercero.isNull("instruccionMontos")) {
+                    JSONObject montos = new JSONObject();
+                    montos.put("dolar", aprobarPagoaTerceros.getString("montoDolar"));
+                    montos.put("instruccion", aprobarPagoaTerceros.getString("instruccionMontos"));
+                    montos.put("monedaOperacion", aprobarPagoaTerceros.getString("monedaOperacion"));
+                    montos.put("monedaInstruccion", aprobarPagoaTerceros.getString("monedaInstruccion"));
+                    aprobarPagoTercero.put("montos", montos);
+                    System.out.println("fin");
+                }
+            */
+            }
+            ingope = objectMapper.readValue(jsonObject.toString(), Ingope.class);
+            ingope.setPIngresarInstruccions(instruccions);
+        } catch (Exception e) {
+            log.error("Ha ocurrido un error en MapearObj =>mapeoIngope", e);
+            return ingope;
+        }
+        return ingope;
+    }
+    private void crearInstruccionesIngope(JSONArray listResult) {
+        listResult.iterator().forEachRemaining(o ->
+                {
+                    JSONObject result = (JSONObject) o;
+                    result.remove("administrarBeneficiarios");
+                    result.remove("reInversion");
+                    result.remove("beneficiario");
+                    result.remove("aprobarPagoaTerceros");
+                    result.put("monto",
+                            validaCampos(result,null,"monto","Long"));
+                    result.put("codigoModalidad",
+                            validaCampos(result,null,"codigoModalidad","Float"));
+                    result.put("bancoOrigen",
+                            validaCampos(result,null,"bancoOrigen","Integer"));
+                    result.put("bancoDeposito",
+                            validaCampos(result,null,"bancoDeposito","Integer"));
+                    result.put("rutEmpleadoIngreso",
+                            validaCampos(result,null,"rutEmpleadoIngreso","Integer"));
+                    result.put("indicadorAvanzaAutomatico",
+                            validaCampos(result,null,"indicadorAvanzaAutomaticoInstruccion","String"));
+                    result.put("numerodelaInstruccion",
+                            validaCampos(result,null,"numeroInstruccion","String"));
+                    generaClaseInstruccionsIngope(result.toString());
+                }
+        );
+        instruccions.setpIngresarInstruccion(instruccion);
+    }
+    @SneakyThrows
+    private void generaClaseInstruccionsIngope(String result) {
+        PIngresarInstruccions.PIngresarInstruccion ins = objectMapper.readValue(result.toString(), PIngresarInstruccions.PIngresarInstruccion.class);
+        instruccion.add(ins);
+    }
+    @SneakyThrows
+    private void generaClaseInstruccionsIngreso(String result) {
+        PIngresarInstruccion ins = objectMapper.readValue(result.toString(), PIngresarInstruccion.class);
+        pInstrucciones.setpIngresarInstruccion(ins);
+    }
+}

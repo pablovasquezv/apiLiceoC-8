@@ -1,10 +1,9 @@
 /**
  *
  */
-package com.complejoeducaciona.models;
+package com.complejoeducaciona.modelosIngope;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -53,6 +52,9 @@ public class Curso implements Serializable {
     @JsonIgnore
     @OneToMany( fetch = FetchType.LAZY, cascade = CascadeType.MERGE,mappedBy = "cursos")
     private List<Matriculas> matriculas;
+    @JsonIgnore
+    @OneToMany( fetch = FetchType.LAZY, cascade = CascadeType.MERGE,mappedBy = "cursos")
+    private List<Profesor> profesores;
 
 /**
  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
@@ -72,8 +74,6 @@ public class Curso implements Serializable {
     private Date createdAt;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date updatedAt;
-
-
 
     // Methods
     @PrePersist

@@ -1,7 +1,6 @@
 package com.complejoeducaciona.convertidor;
 
-
-import com.complejoeducaciona.models.Ingope;
+import com.complejoeducaciona.modelosIngope.Ingope;
 import com.complejoeducaciona.utils.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;

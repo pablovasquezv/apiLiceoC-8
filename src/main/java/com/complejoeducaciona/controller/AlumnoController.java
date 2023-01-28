@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
-import com.complejoeducaciona.models.Alumno;
+import com.complejoeducaciona.modelosIngope.Alumno;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,7 +51,7 @@ public class AlumnoController {
     @ResponseBody()
     private ResponseEntity<Map<String, Object>> addNewAlummo1(@Valid @RequestBody Alumno alumno, BindingResult result) {
         Map<String, Object> responseAsMap = new HashMap<String, Object>();
-        ResponseEntity<Map<String, Object>> reponseEntity = null;
+        ResponseEntity<Map<String, Object>> responseEntity = null;
         List<String> errores = null;
         if (result.hasErrors()) {
             errores = new ArrayList<String>();
@@ -59,29 +59,29 @@ public class AlumnoController {
                 errores.add(error.getDefaultMessage());
             }
             responseAsMap.put("Errores", errores);
-            reponseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
-            return reponseEntity;
+            responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
+            return responseEntity;
         }
         try {
             Alumno alumnFromDB = iAlumnoImplementServices.save(alumno);
             if (alumnFromDB != null) {
                 responseAsMap.put("alumno", alumno);
                 responseAsMap.put("Mensaje", "El Alumno con Id" + alumno.getId_alumno() + " se creó correctamente");
-                reponseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.OK);
+                responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.OK);
             } else {
                 responseAsMap.put("Mensaje", "No se creo el Alumno");
-                reponseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap,
+                responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap,
                         HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
         } catch (DataAccessException dataAccessException) {
             responseAsMap.put("Mensaje", "No se creo el Alumno" + dataAccessException.getMostSpecificCause().toString());
-            reponseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.INTERNAL_SERVER_ERROR);
+            responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception exception) {
             log.error("Ocurrio un Error =>" + exception.getMessage().toString());
         }
 
-        return reponseEntity;
+        return responseEntity;
 
     }
 

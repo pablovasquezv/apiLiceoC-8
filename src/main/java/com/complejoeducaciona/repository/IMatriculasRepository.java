@@ -1,7 +1,7 @@
 package com.complejoeducaciona.repository;
 
-import com.complejoeducaciona.models.Alumno;
-import com.complejoeducaciona.models.Matriculas;
+import com.complejoeducaciona.modelosIngope.Alumno;
+import com.complejoeducaciona.modelosIngope.Matriculas;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

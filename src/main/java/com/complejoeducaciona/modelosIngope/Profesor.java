@@ -1,31 +1,13 @@
-package com.complejoeducaciona.models;
+package com.complejoeducaciona.modelosIngope;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Table;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.JoinColumn;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.AllArgsConstructor;
@@ -108,11 +90,12 @@ public class Profesor {
     @JoinColumn(name = "id_domicilio")
     private Domicilio domicilio;
 
-    /**
-     * @JsonIgnore
-     * @OneToMany(mappedBy = "profesor", fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
-     * private List<Curso> cursos;
-     */
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    //@NotNull(message = "¡El id del Curso no debe ser nulo!")
+    @JoinColumn(name = "id_curso")
+    private Curso cursos;
+
 
     // Esto no permitirá que el campo createdAt sea modificado después de su
     // creación.

@@ -21,7 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
-import com.complejoeducaciona.models.Curso;
+import com.complejoeducaciona.modelosIngope.Curso;
 
 import javax.validation.Valid;
 
@@ -80,7 +80,8 @@ public class CursoController {
 
     // Método para actualizar un Curso
     @PutMapping(value = "/update/{id}")
-    private ResponseEntity<Map<String, Object>> updateCurso(@PathVariable long id, @Valid @RequestBody Curso curso, BindingResult bindingResult) {
+    private ResponseEntity<Map<String, Object>> updateCurso(@PathVariable long id, @Valid @RequestBody Curso curso,
+                                                            BindingResult bindingResult) {
         Map<String, Object> responseAsMap = new HashMap<>();
         ResponseEntity<Map<String, Object>> responseEntity = null;
         List<String> errores = null;

@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 //Para decir que es un Servicio
 import org.springframework.stereotype.Service;
 
-import com.complejoeducaciona.models.Departamento;
+import com.complejoeducaciona.modelosIngope.Departamento;
 import com.complejoeducaciona.repository.IDepartamentoRepository;
 
 /**

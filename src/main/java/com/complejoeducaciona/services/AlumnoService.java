@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.complejoeducaciona.impl.IAlumnoImplementServices;
-import com.complejoeducaciona.models.Apoderado;
-import com.complejoeducaciona.models.Matriculas;
-import com.complejoeducaciona.repository.IMatriculasRepository;
+import com.complejoeducaciona.modelosIngope.Apoderado;
 import com.complejoeducaciona.utils.Utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,7 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.complejoeducaciona.models.Alumno;
+import com.complejoeducaciona.modelosIngope.Alumno;
 import com.complejoeducaciona.repository.IAlumnoRepository;
 import com.complejoeducaciona.repository.IApoderadoRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,8 +33,6 @@ public class AlumnoService implements IAlumnoImplementServices {
     private IAlumnoRepository iAlumnoRepository;
     @Autowired
     private IApoderadoRepository iApoderadoRepository;
-    @Autowired
-    private IMatriculasRepository iMatriculasRepository;
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -55,9 +51,6 @@ public class AlumnoService implements IAlumnoImplementServices {
         Alumno respuesta = new Alumno();
         Apoderado apoderado = iApoderadoRepository.findById(alumno.getApoderado().getId_apoderado()).orElse(null);
         alumno.setApoderado(apoderado);
-        /*
-        Matriculas  matriculas= iMatriculasRepository.findById(alumno.getMatriculas().getId_matricula()).orElse(null);
-        alumno.setMatriculas(matriculas);*/
         log.info("---Inicio de creción Alumno----" + objectMapper.writeValueAsString(alumno));
         respuesta = iAlumnoRepository.save(alumno);
         log.info("Alumno creado =>" + objectMapper.writeValueAsString(alumno));
@@ -66,6 +59,7 @@ public class AlumnoService implements IAlumnoImplementServices {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public Alumno update(Long id, Alumno alumno) throws Exception {
         try {
             Optional<Alumno> optionalAlumno = iAlumnoRepository.findById(id);
@@ -83,6 +77,7 @@ public class AlumnoService implements IAlumnoImplementServices {
     @Override
     @Transactional(readOnly = true)
     public List<Alumno> findAll(Sort sort) {
+
         return iAlumnoRepository.findAll(sort);
     }
 
@@ -95,6 +90,7 @@ public class AlumnoService implements IAlumnoImplementServices {
     @Override
     @Transactional(readOnly = true)
     public Alumno findById(long id) {
+
         return iAlumnoRepository.findById(id);
     }
 

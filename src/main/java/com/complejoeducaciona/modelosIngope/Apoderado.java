@@ -1,10 +1,9 @@
 /**
  *
  */
-package com.complejoeducaciona.models;
+package com.complejoeducaciona.modelosIngope;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

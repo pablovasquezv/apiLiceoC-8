@@ -1,3 +1,7 @@
+<!--
+Página para transformar xml a objeto java
+https://json2csharp.com/code-converters/xml-to-java
+-->
 <PIngresaroperacion>
     <IdentificadorTransaccion>6998358087227183105</IdentificadorTransaccion>
     <Producto>DIVISA</Producto>

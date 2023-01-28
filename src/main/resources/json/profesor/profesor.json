@@ -1,0 +1,29 @@
+{
+  "id_profesor": 0,
+  "rut_profesor": "16.412.041-4",
+  "nombres_profesor": "Juan Pablo",
+  "apellido_paterno_profesor": "Vásquez",
+  "apellido_materno_profesor": "Vásquez",
+  "fecha_nacimiento_profesor": "1986-11-08T20:20:55.252Z",
+  "genero_profesor": "string",
+  "celular_profesor": "string",
+  "email_profesor": "string",
+  "domicilio": {
+    "id_domicilio": 0,
+    "numero_domicilio": 714,
+    "nombre_calle_domicilio": "El Olivillo",
+    "sector_domicilio": "Guacolda Sur N° 2",
+    "ciudad_domicilio": "Traiguen",
+    "createdAt": "2022-12-19T22:06:55.252Z",
+    "updatedAt": "2022-12-19T22:06:55.252Z"
+  },
+  "cursos": {
+    "id_curso": 1,
+    "nombre_curso": "string",
+    "descripcion_curso": "string",
+    "createdAt": "2022-12-19T22:06:55.252Z",
+    "updatedAt": "2022-12-19T22:06:55.252Z"
+  },
+  "createdAt": "2022-12-19T22:06:55.252Z",
+  "updatedAt": "2022-12-19T22:06:55.252Z"
+}

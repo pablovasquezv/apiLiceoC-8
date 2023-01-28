@@ -5,7 +5,7 @@ package com.complejoeducaciona.repository;
 
 import java.util.List;
 
-import com.complejoeducaciona.models.Curso;
+import com.complejoeducaciona.modelosIngope.Curso;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

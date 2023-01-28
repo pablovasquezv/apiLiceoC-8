@@ -8,7 +8,7 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.complejoeducaciona.models.Departamento;
+import com.complejoeducaciona.modelosIngope.Departamento;
 
 /**
  * @author Pablo

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.complejoeducaciona.models;
+package com.complejoeducaciona.modelosIngope;
 
 import java.io.Serializable;
 import java.util.Date;
