@@ -1,4 +1,6 @@
-package com.complejoeducaciona.modelosIngope;
+package com.complejoeducaciona.modelosIngreope;
+
+import com.complejoeducaciona.modelosIngope.GFirmantes;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -13,12 +15,12 @@ import java.util.List;
 })
 
 public class GFirmantess {
-   // @XmlElement(name = "gFirmantes", required = true)
-    private List<GFirmantes> gFirmantes;
+    @XmlElement(name = "gFirmantes", required = true)
+    private List<com.complejoeducaciona.modelosIngope.GFirmantes> gFirmantes;
 
-    public List<GFirmantes> getgFirmantes() {
+    public List<com.complejoeducaciona.modelosIngope.GFirmantes> getgFirmantes() {
         if (gFirmantes == null) {
-            gFirmantes = new ArrayList<GFirmantes>();
+            gFirmantes = new ArrayList<com.complejoeducaciona.modelosIngope.GFirmantes>();
         }
         return this.gFirmantes;
     }
@@ -27,5 +29,3 @@ public class GFirmantess {
         this.gFirmantes = gFirmantes;
     }
 }
-
-

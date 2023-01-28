@@ -1,18 +1,14 @@
-<!--
-Página para transformar xml a objeto java
-https://json2csharp.com/code-converters/xml-to-java
--->
 <PIngresaroperacion>
-    <IdentificadorTransaccion>6998358087227183105</IdentificadorTransaccion>
+    <IdentificadorTransaccion>7019691038103363585</IdentificadorTransaccion>
     <Producto>DIVISA</Producto>
     <Operacion>VENTA</Operacion>
     <IdentificadorCliente>2634691</IdentificadorCliente>
     <CuentaInversion>0</CuentaInversion>
     <CodigoMoneda>DOLAR</CodigoMoneda>
-    <MontoOperacionString>99.0</MontoOperacionString>
-    <UnidadesTransadas>99.0</UnidadesTransadas>
-    <FechaIngreso>2022-11-15</FechaIngreso>
-    <FechaSolicitud>2022-11-15</FechaSolicitud>
+    <MontoOperacionString>2222.0</MontoOperacionString>
+    <UnidadesTransadas>2222.0</UnidadesTransadas>
+    <FechaIngreso>2023-01-13</FechaIngreso>
+    <FechaSolicitud>2023-01-13</FechaSolicitud>
     <RutEmpleadoEjecutivoConect>13237574</RutEmpleadoEjecutivoConect>
     <UsuarioEjecutivoConectado>CTORRES</UsuarioEjecutivoConectado>
     <RutEmpleadoEjecutivoOperac>13237574</RutEmpleadoEjecutivoOperac>
@@ -23,17 +19,17 @@ https://json2csharp.com/code-converters/xml-to-java
         <CuentaCliente>
             <TipoCliente>2</TipoCliente>
             <Rut>2634691</Rut>
-            <NombredeCuenta>pedro llorens llorens</NombredeCuenta>
-            <AccountId>4AEF6050-B1A6-EA11-80E2-000C29EDC98A</AccountId>
-            <IDContacto>998b8f3d-2e94-4f9d-8e6d-c3094c490a28</IDContacto>
+            <NombredeCuenta>Pedro Llorens Sabate</NombredeCuenta>
+            <AccountId>B3291A51-7416-E811-80D4-000C29AB8330</AccountId>
+            <IDContacto>3e858468-974b-4944-8b8f-3ffd6d1d8b24</IDContacto>
             <DigitoVerificador>6</DigitoVerificador>
         </CuentaCliente>
         <GFirmantess>
             <GFirmantes>
-                <NombreFirmante>pedro  llorens  llorens </NombreFirmante>
-                <CorreoElectronico>prueba@prueba.cl</CorreoElectronico>
+                <NombreFirmante>Pedro Llorens Sabate</NombreFirmante>
+                <CorreoElectronico>bryan.v.gomez@gmail.com</CorreoElectronico>
                 <RutFirmante>2634691</RutFirmante>
-                <IdentificadorFirmante>4aef6050-b1a6-ea11-80e2-000c29edc98a</IdentificadorFirmante>
+                <IdentificadorFirmante>b3291a51-7416-e811-80d4-000c29ab8330</IdentificadorFirmante>
             </GFirmantes>
         </GFirmantess>
         <NombrePlantilla>SOLICITUD_VENTAMEX_PN_V1.0.dotx</NombrePlantilla>
@@ -43,17 +39,17 @@ https://json2csharp.com/code-converters/xml-to-java
         <CodigoMonedaPago>PESO</CodigoMonedaPago>
         <CodigoIso>USD</CodigoIso>
         <CodigoMonedaCobro>DOLAR</CodigoMonedaCobro>
-        <MontoTotalPago>89027.0</MontoTotalPago>
+        <MontoTotalPago>2048595.0</MontoTotalPago>
         <Paridad>1.0</Paridad>
-        <PrecioCompra>910.64</PrecioCompra>
-        <PrecioMedio>904.95</PrecioMedio>
-        <PrecioVenta>899.26</PrecioVenta>
+        <PrecioCompra>931.65</PrecioCompra>
+        <PrecioMedio>926.8050000000001</PrecioMedio>
+        <PrecioVenta>921.96</PrecioVenta>
         <MontoComisionCalculada>0.0</MontoComisionCalculada>
         <MontoComisionRealCalculada>0.0</MontoComisionRealCalculada>
     </OperacionMonedaExtranjera>
     <PIngresarInstruccions>
         <PIngresarInstruccion>
-            <Monto>89027.0</Monto>
+            <Monto>2048595.0</Monto>
             <CodigoModalidad>250</CodigoModalidad>
             <BancoOrigen>97004000</BancoOrigen>
             <BancoDeposito>97004000</BancoDeposito>
@@ -66,14 +62,14 @@ https://json2csharp.com/code-converters/xml-to-java
                 <TipoCliente>2</TipoCliente>
                 <DigitoVerificador>6</DigitoVerificador>
                 <Rut>2634691</Rut>
-                <NumerodeCuenta>4AEF6050-B1A6-EA11-80E2-000C29EDC98A</NumerodeCuenta>
-                <AccountId>4AEF6050-B1A6-EA11-80E2-000C29EDC98A</AccountId>
-                <IDContacto>998b8f3d-2e94-4f9d-8e6d-c3094c490a28</IDContacto>
+                <NumerodeCuenta>B3291A51-7416-E811-80D4-000C29AB8330</NumerodeCuenta>
+                <AccountId>B3291A51-7416-E811-80D4-000C29AB8330</AccountId>
+                <IDContacto>3e858468-974b-4944-8b8f-3ffd6d1d8b24</IDContacto>
             </Cuenta>
             <IndicadorAvanzaAutomatico>true</IndicadorAvanzaAutomatico>
         </PIngresarInstruccion>
         <PIngresarInstruccion>
-            <Monto>99.0</Monto>
+            <Monto>2222.0</Monto>
             <CodigoModalidad>249</CodigoModalidad>
             <BancoOrigen>97004000</BancoOrigen>
             <BancoDeposito>97004000</BancoDeposito>
@@ -86,15 +82,15 @@ https://json2csharp.com/code-converters/xml-to-java
                 <TipoCliente>2</TipoCliente>
                 <DigitoVerificador>6</DigitoVerificador>
                 <Rut>2634691</Rut>
-                <NumerodeCuenta>4AEF6050-B1A6-EA11-80E2-000C29EDC98A</NumerodeCuenta>
-                <AccountId>4AEF6050-B1A6-EA11-80E2-000C29EDC98A</AccountId>
-                <IDContacto>998b8f3d-2e94-4f9d-8e6d-c3094c490a28</IDContacto>
+                <NumerodeCuenta>B3291A51-7416-E811-80D4-000C29AB8330</NumerodeCuenta>
+                <AccountId>B3291A51-7416-E811-80D4-000C29AB8330</AccountId>
+                <IDContacto>3e858468-974b-4944-8b8f-3ffd6d1d8b24</IDContacto>
             </Cuenta>
             <IndicadorAvanzaAutomatico>true</IndicadorAvanzaAutomatico>
         </PIngresarInstruccion>
     </PIngresarInstruccions>
     <IndicadorAvanzaAutomatico>true</IndicadorAvanzaAutomatico>
     <NombreSucursalRetiro>SUC. CASA MATRIZ</NombreSucursalRetiro>
-    <Observacion>Prueba Venta Magic 15112022</Observacion>
+    <Observacion>Prueba JuanDanielJohan 7 13012023</Observacion>
     <IndicadorFirmaMiPass>false</IndicadorFirmaMiPass>
 </PIngresaroperacion>

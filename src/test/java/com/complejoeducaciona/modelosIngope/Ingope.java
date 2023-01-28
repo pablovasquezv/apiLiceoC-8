@@ -1,6 +1,7 @@
 package com.complejoeducaciona.modelosIngope;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,8 +29,8 @@ import javax.xml.bind.annotation.XmlType;
         "canal",
         "identificadorCanalAtencion",
         "firmarDocumentos",
-        "operacionMonedaExtranjera",
-        "pIngresarInstruccions",
+        "divisa",
+        "listaInstruccion",
         "indicadorAvanzaAutomatico",
         "nombreSucursalRetiro",
         "observacion",
@@ -56,8 +57,9 @@ public class Ingope {
     public String canal;
     public int identificadorCanalAtencion;
     public FirmarDocumentos firmarDocumentos;
-    public OperacionMonedaExtranjera operacionMonedaExtranjera;
-    public PIngresarInstruccions pIngresarInstruccions;
+    public OperacionMonedaExtranjera divisa;
+    //public PIngresarInstruccions pIngresarInstruccions;
+    public PIngresarInstruccions listaInstruccion;
     public boolean indicadorAvanzaAutomatico;
     public String nombreSucursalRetiro;
     public String observacion;

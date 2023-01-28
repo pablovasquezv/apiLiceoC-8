@@ -1,5 +1,4 @@
-package com.complejoeducaciona.modelosIngope;
-
+package com.complejoeducaciona.modelosIngreope;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
