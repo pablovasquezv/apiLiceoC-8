@@ -4,9 +4,12 @@
 package com.complejoeducaciona.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.complejoeducaciona.impl.IApoderadoImplementServices;
 import com.complejoeducaciona.utils.Utils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +35,9 @@ public class ApoderadoService implements IApoderadoImplementServices {
     @Autowired
     private Utils utils;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Override
     @Transactional(readOnly = false)
     public Apoderado save(Apoderado apoderado) {
@@ -45,8 +51,17 @@ public class ApoderadoService implements IApoderadoImplementServices {
 
     @Override
     @Transactional(readOnly = false)
-    public Apoderado update(Apoderado apoderado) {
-        return null;
+    public Apoderado update(Long id, Apoderado apoderado) {
+        try {
+            Optional<Apoderado> optionalApoderado= iApoderadoRepository.findById(id);
+            Apoderado apoderadoUpdate =optionalApoderado.get();
+            apoderadoUpdate= iApoderadoRepository.save(apoderado);
+            log.info("---Actualización Alumno----" + objectMapper.writeValueAsString(iApoderadoRepository.save(apoderado)));
+            return apoderado;
+        }catch (Exception e){
+            log.info("Falló la actualización del Apoderado");
+        }
+        return apoderado;
     }
 
     @Override
@@ -69,8 +84,14 @@ public class ApoderadoService implements IApoderadoImplementServices {
 
     @Override
     @Transactional(readOnly = false)
-    public void deleteById(long id) {
-        iApoderadoRepository.deleteById(id);
+    public Object deleteApoderadoById(Long id) {
+        try {
+            log.error("Método deleteApoderadoById eliminar el Apoderado =>");
+            iApoderadoRepository.deleteById(id);
+        } catch (Exception e) {
+            log.error("Ocurrio un error en Método deleteApoderadoById al eliminar el Apoderado =>" + e);
+        }
+        return null;
     }
 
 }

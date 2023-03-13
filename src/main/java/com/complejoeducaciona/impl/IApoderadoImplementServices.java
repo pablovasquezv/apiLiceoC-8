@@ -11,7 +11,7 @@ public interface IApoderadoImplementServices {
 
     public Apoderado save(Apoderado apoderado);
 
-    public Apoderado update(Apoderado apoderado);
+    public Apoderado update(Long id, Apoderado apoderado);
 
     public List<Apoderado> findAll(Sort sort);
 
@@ -19,5 +19,5 @@ public interface IApoderadoImplementServices {
 
     public Apoderado findById(long id);
 
-    public void deleteById(long id);
+    public Object deleteApoderadoById(Long id);
 }
