@@ -1,21 +1,21 @@
 <PIngresaroperacion>
-    <IdentificadorTransaccion>7019691038103363585</IdentificadorTransaccion>
+    <IdentificadorTransaccion>7019681488748716033</IdentificadorTransaccion>
     <Producto>DIVISA</Producto>
-    <Operacion>VENTA</Operacion>
+    <Operacion>COMPRA</Operacion>
     <IdentificadorCliente>2634691</IdentificadorCliente>
     <CuentaInversion>0</CuentaInversion>
     <CodigoMoneda>DOLAR</CodigoMoneda>
-    <MontoOperacionString>2222.0</MontoOperacionString>
-    <UnidadesTransadas>2222.0</UnidadesTransadas>
+    <MontoOperacionString>932217.0</MontoOperacionString>
+    <UnidadesTransadas>999.0</UnidadesTransadas>
     <FechaIngreso>2023-01-13</FechaIngreso>
     <FechaSolicitud>2023-01-13</FechaSolicitud>
     <RutEmpleadoEjecutivoConect>13237574</RutEmpleadoEjecutivoConect>
     <UsuarioEjecutivoConectado>CTORRES</UsuarioEjecutivoConectado>
     <RutEmpleadoEjecutivoOperac>13237574</RutEmpleadoEjecutivoOperac>
     <Canal>PTV.BCO</Canal>
-    <IdentificadorCanalAtencion>1</IdentificadorCanalAtencion>
+    <IdentificadorCanalAtencion>2</IdentificadorCanalAtencion>
     <FirmarDocumentos>
-        <IdentificadorContrato>56</IdentificadorContrato>
+        <IdentificadorContrato>257</IdentificadorContrato>
         <CuentaCliente>
             <TipoCliente>2</TipoCliente>
             <Rut>2634691</Rut>
@@ -26,34 +26,34 @@
         </CuentaCliente>
         <GFirmantess>
             <GFirmantes>
-                <NombreFirmante>Pedro Llorens Sabate</NombreFirmante>
+                <NombreFirmante>Pedro Llorens Sabate</NombreFirmante>
                 <CorreoElectronico>bryan.v.gomez@gmail.com</CorreoElectronico>
                 <RutFirmante>2634691</RutFirmante>
                 <IdentificadorFirmante>b3291a51-7416-e811-80d4-000c29ab8330</IdentificadorFirmante>
             </GFirmantes>
         </GFirmantess>
-        <NombrePlantilla>SOLICITUD_VENTAMEX_PN_V1.0.dotx</NombrePlantilla>
+        <NombrePlantilla>SOL_COMPRAMEX_FMU_APO_PN_V1.0.dotx</NombrePlantilla>
     </FirmarDocumentos>
     <OperacionMonedaExtranjera>
         <CodigoOficina>1000</CodigoOficina>
-        <CodigoMonedaPago>PESO</CodigoMonedaPago>
+        <CodigoMonedaPago>DOLAR</CodigoMonedaPago>
         <CodigoIso>USD</CodigoIso>
-        <CodigoMonedaCobro>DOLAR</CodigoMonedaCobro>
-        <MontoTotalPago>2048595.0</MontoTotalPago>
+        <CodigoMonedaCobro>PESO</CodigoMonedaCobro>
+        <MontoTotalPago>999.0</MontoTotalPago>
         <Paridad>1.0</Paridad>
-        <PrecioCompra>931.65</PrecioCompra>
+        <PrecioCompra>933.15</PrecioCompra>
         <PrecioMedio>926.8050000000001</PrecioMedio>
-        <PrecioVenta>921.96</PrecioVenta>
+        <PrecioVenta>920.46</PrecioVenta>
         <MontoComisionCalculada>0.0</MontoComisionCalculada>
         <MontoComisionRealCalculada>0.0</MontoComisionRealCalculada>
     </OperacionMonedaExtranjera>
     <PIngresarInstruccions>
         <PIngresarInstruccion>
-            <Monto>2048595.0</Monto>
-            <CodigoModalidad>250</CodigoModalidad>
+            <Monto>999.0</Monto>
+            <CodigoModalidad>29</CodigoModalidad>
             <BancoOrigen>97004000</BancoOrigen>
             <BancoDeposito>97004000</BancoDeposito>
-            <Moneda>PESO</Moneda>
+            <Moneda>DOLAR</Moneda>
             <TipoInstruccion>Pago</TipoInstruccion>
             <RutEmpleadoIngreso>13237574</RutEmpleadoIngreso>
             <CanalIngreso>PTV.BCO</CanalIngreso>
@@ -67,13 +67,25 @@
                 <IDContacto>3e858468-974b-4944-8b8f-3ffd6d1d8b24</IDContacto>
             </Cuenta>
             <IndicadorAvanzaAutomatico>true</IndicadorAvanzaAutomatico>
+            <IndicadorReinversion>true</IndicadorReinversion>
+            <DatosReinversion>
+                <OperacionFondosMutuos>
+                    <IndicadorRescateTotal>NO</IndicadorRescateTotal>
+                    <CodigoOperacion>APO-FMUD</CodigoOperacion>
+                    <Indicador18q>NO</Indicador18q>
+                    <BeneficioTributario>NO</BeneficioTributario>
+                    <CodigoPlanCuenta>1</CodigoPlanCuenta>
+                    <NemoFondoMutuo>CORPUSFUND</NemoFondoMutuo>
+                    <NumeroCuenta>3</NumeroCuenta>
+                </OperacionFondosMutuos>
+            </DatosReinversion>
         </PIngresarInstruccion>
         <PIngresarInstruccion>
-            <Monto>2222.0</Monto>
-            <CodigoModalidad>249</CodigoModalidad>
+            <Monto>932217.0</Monto>
+            <CodigoModalidad>223</CodigoModalidad>
             <BancoOrigen>97004000</BancoOrigen>
             <BancoDeposito>97004000</BancoDeposito>
-            <Moneda>DOLAR</Moneda>
+            <Moneda>PESO</Moneda>
             <TipoInstruccion>Cobro</TipoInstruccion>
             <RutEmpleadoIngreso>13237574</RutEmpleadoIngreso>
             <CanalIngreso>PTV.BCO</CanalIngreso>
@@ -87,10 +99,10 @@
                 <IDContacto>3e858468-974b-4944-8b8f-3ffd6d1d8b24</IDContacto>
             </Cuenta>
             <IndicadorAvanzaAutomatico>true</IndicadorAvanzaAutomatico>
+            <NumeroCuentaCorriente>4963599856</NumeroCuentaCorriente>
         </PIngresarInstruccion>
     </PIngresarInstruccions>
     <IndicadorAvanzaAutomatico>true</IndicadorAvanzaAutomatico>
-    <NombreSucursalRetiro>SUC. CASA MATRIZ</NombreSucursalRetiro>
-    <Observacion>Prueba JuanDanielJohan 7 13012023</Observacion>
+    <Observacion>Prueba JuanDanielJohan 2 13012023</Observacion>
     <IndicadorFirmaMiPass>false</IndicadorFirmaMiPass>
 </PIngresaroperacion>

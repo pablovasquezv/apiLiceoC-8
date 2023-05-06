@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @RestController
-@RequestMapping(value = ("/colegio/v1"))
+@RequestMapping(value = ("/colegio/v1/"))
 public class ApoderadoController {
     /*
      * Autowired:es Para decirle al servicio que estÃ¡ conectado con el repositorio

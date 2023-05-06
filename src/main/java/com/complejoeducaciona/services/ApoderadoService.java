@@ -41,11 +41,16 @@ public class ApoderadoService implements IApoderadoImplementServices {
     @Override
     @Transactional(readOnly = false)
     public Apoderado save(Apoderado apoderado) {
-        Apoderado repuest= new Apoderado();
-        log.info("---Inicio de creción Apoderado ----"+utils.imprimirLogEntrada(apoderado));
-        repuest=iApoderadoRepository.save(apoderado);
-        log.info("Json de Salida =>"+utils.imprimirLogSalida(repuest));
-        log.info("----Fin de método Creación Apoderado----");
+        Apoderado repuest = null;
+        try {
+            repuest = new Apoderado();
+            log.info("---Inicio de creción Apoderado ----" + utils.imprimirLogEntrada(apoderado));
+            repuest = iApoderadoRepository.save(apoderado);
+            log.info("Json de Salida =>" + utils.imprimirLogSalida(repuest));
+            log.info("----Fin de método Creación Apoderado----");
+        } catch (Exception e) {
+            log.info("Falló en la creación del Apoderado",e);
+        }
         return repuest;
     }
 
@@ -53,12 +58,12 @@ public class ApoderadoService implements IApoderadoImplementServices {
     @Transactional(readOnly = false)
     public Apoderado update(Long id, Apoderado apoderado) {
         try {
-            Optional<Apoderado> optionalApoderado= iApoderadoRepository.findById(id);
-            Apoderado apoderadoUpdate =optionalApoderado.get();
-            apoderadoUpdate= iApoderadoRepository.save(apoderado);
+            Optional<Apoderado> optionalApoderado = iApoderadoRepository.findById(id);
+            Apoderado apoderadoUpdate = optionalApoderado.get();
+            apoderadoUpdate = iApoderadoRepository.save(apoderado);
             log.info("---Actualización Alumno----" + objectMapper.writeValueAsString(iApoderadoRepository.save(apoderado)));
             return apoderado;
-        }catch (Exception e){
+        } catch (Exception e) {
             log.info("Falló la actualización del Apoderado");
         }
         return apoderado;

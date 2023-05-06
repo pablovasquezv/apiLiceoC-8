@@ -112,6 +112,9 @@ public class XmlToJson {
         xml = xml.replace("</pIngresarInstruccions>","</listaInstruccion>");
         xml = xml.replace("<operacionMonedaExtranjera>","<divisa>");
         xml = xml.replace("</operacionMonedaExtranjera>","</divisa>");
+        xml = xml.replace("<operacionFondosMutuos>","<fondosMutuos>");
+        xml = xml.replace("</operacionFondosMutuos>","</fondosMutuos>");
+
         return xml;
     }
 }

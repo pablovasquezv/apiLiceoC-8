@@ -30,6 +30,8 @@ import javax.xml.bind.annotation.XmlType;
         "identificadorCanalAtencion",
         "firmarDocumentos",
         "divisa",
+        "fondosMutuos",
+        "acciones",
         "listaInstruccion",
         "indicadorAvanzaAutomatico",
         "nombreSucursalRetiro",
@@ -58,6 +60,8 @@ public class Ingope {
     public int identificadorCanalAtencion;
     public FirmarDocumentos firmarDocumentos;
     public OperacionMonedaExtranjera divisa;
+    public OperacionFondosMutuos fondosMutuos;
+    public OperacionAcciones acciones;
     //public PIngresarInstruccions pIngresarInstruccions;
     public PIngresarInstruccions listaInstruccion;
     public boolean indicadorAvanzaAutomatico;

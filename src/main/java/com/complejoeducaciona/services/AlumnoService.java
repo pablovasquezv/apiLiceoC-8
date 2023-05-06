@@ -48,12 +48,17 @@ public class AlumnoService implements IAlumnoImplementServices {
     @Override
     @Transactional(readOnly = false)
     public Alumno save(Alumno alumno) throws JsonProcessingException {
-        Alumno respuesta = new Alumno();
-        Apoderado apoderado = iApoderadoRepository.findById(alumno.getApoderado().getId_apoderado()).orElse(null);
-        alumno.setApoderado(apoderado);
-        log.info("---Inicio de creción Alumno----" + objectMapper.writeValueAsString(alumno));
-        respuesta = iAlumnoRepository.save(alumno);
-        log.info("Alumno creado =>" + objectMapper.writeValueAsString(alumno));
+        Alumno respuesta = null;
+        try {
+            respuesta = new Alumno();
+            Apoderado apoderado = iApoderadoRepository.findById(alumno.getApoderado().getId_apoderado()).orElse(null);
+            alumno.setApoderado(apoderado);
+            log.info("---Inicio de creción Alumno----" + objectMapper.writeValueAsString(alumno));
+            respuesta = iAlumnoRepository.save(alumno);
+            log.info("Alumno creado =>" + objectMapper.writeValueAsString(alumno));
+        } catch (Exception e) {
+            log.error("Falló en la creación del  Alumno", e);
+        }
         return respuesta;
 
     }

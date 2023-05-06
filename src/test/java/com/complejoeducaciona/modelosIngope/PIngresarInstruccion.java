@@ -19,7 +19,10 @@ import javax.xml.bind.annotation.XmlType;
         "canalIngreso",
         "indicadorPagoTerceros",
         "cuenta",
-        "indicadorAvanzaAutomatico"
+        "indicadorAvanzaAutomatico",
+        "indicadorReinversion",
+        "datosReinversion",
+        "numeroCuentaCorriente"
 })
 
 @Data
@@ -36,4 +39,7 @@ public class PIngresarInstruccion {
     public boolean indicadorPagoTerceros;
     public Cuenta cuenta;
     public boolean indicadorAvanzaAutomatico;
+    public boolean indicadorReinversion;
+    public DatosReinversion datosReinversion;
+    public double numeroCuentaCorriente;
 }
