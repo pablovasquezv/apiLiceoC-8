@@ -57,16 +57,17 @@ public class ApoderadoService implements IApoderadoImplementServices {
     @Override
     @Transactional(readOnly = false)
     public Apoderado update(Long id, Apoderado apoderado) {
+        Optional<Apoderado> optionalApoderado = null;
+        Apoderado apoderadoUpdate = null;
         try {
-            Optional<Apoderado> optionalApoderado = iApoderadoRepository.findById(id);
-            Apoderado apoderadoUpdate = optionalApoderado.get();
+            optionalApoderado = iApoderadoRepository.findById(id);
+            apoderadoUpdate = optionalApoderado.get();
             apoderadoUpdate = iApoderadoRepository.save(apoderado);
-            log.info("---Actualización Alumno----" + objectMapper.writeValueAsString(iApoderadoRepository.save(apoderado)));
-            return apoderado;
+            log.info("---Actualización Apoderado----" + objectMapper.writeValueAsString(iApoderadoRepository.save(apoderado)));
         } catch (Exception e) {
             log.info("Falló la actualización del Apoderado");
         }
-        return apoderado;
+        return apoderadoUpdate;
     }
 
     @Override
