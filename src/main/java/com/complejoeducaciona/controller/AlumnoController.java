@@ -108,9 +108,9 @@ public class AlumnoController {
         try {
             if (page != null & size != null) {
                 Pageable pageable = PageRequest.of(page, size, sortByName);
-                alumnos = iAlumnoImplementServices.findAll(pageable).getContent();
+                alumnos = iAlumnoImplementServices.findAllPageableAlumno (pageable).getContent();
             } else {
-                alumnos = iAlumnoImplementServices.findAll(sortByName);
+                alumnos = iAlumnoImplementServices.findAllSortAlumno(sortByName);
             }
 
             // Validación sí tiene Alumnos la lista
@@ -131,7 +131,7 @@ public class AlumnoController {
         Alumno alumnos = null;
         ResponseEntity<Alumno> responseEntity = null;
         try {
-            alumnos = iAlumnoImplementServices.findById(id);
+            alumnos = iAlumnoImplementServices.findByIdAlumno(id);
             // si exite
             if (alumnos != null) {
                 // retorna un 200
@@ -153,7 +153,7 @@ public class AlumnoController {
         // TODO Auto-generated method stub
         ResponseEntity<Alumno> responseEntity = null;
         try {
-            if (iAlumnoImplementServices.findById(id) != null) {
+            if (iAlumnoImplementServices.findByIdAlumno(id) != null) {
                 log.info("Se va a eliminar");
                 iAlumnoImplementServices.deleteAlumnoById(id);
                 log.info("Se elimino");

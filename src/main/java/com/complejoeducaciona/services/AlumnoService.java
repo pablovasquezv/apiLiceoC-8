@@ -81,22 +81,22 @@ public class AlumnoService implements IAlumnoImplementServices {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Alumno> findAll(Sort sort) {
+    public List<Alumno> findAllSortAlumno(Sort sort) {
 
         return iAlumnoRepository.findAll(sort);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Alumno> findAll(Pageable pageable) {
+    public Page<Alumno> findAllPageableAlumno(Pageable pageable) {
         return iAlumnoRepository.findAll(pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Alumno findById(long id) {
+    public Alumno findByIdAlumno(long id) {
 
-        return iAlumnoRepository.findById(id);
+        return iAlumnoRepository.findByIdAlumno(id);
     }
 
     @Override
