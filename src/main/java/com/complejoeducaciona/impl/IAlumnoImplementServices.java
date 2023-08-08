@@ -13,11 +13,11 @@ public interface IAlumnoImplementServices {
 
     public Alumno update(Long id, Alumno alumno) throws Exception;
 
-    public List<Alumno> findAll(Sort sort) throws Exception;
+    public List<Alumno> findAllSortAlumno(Sort sort) throws Exception;
 
-    public Page<Alumno> findAll(Pageable pageable) throws Exception;
+    public Page<Alumno> findAllPageableAlumno(Pageable pageable) throws Exception;
 
-    public Alumno findById(long id) throws Exception;
+    public Alumno findByIdAlumno(long id) throws Exception;
 
     public Object deleteAlumnoById(Long id) throws Exception;
 }
